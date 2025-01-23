@@ -1,0 +1,117 @@
+export enum Ability {
+    STRENGTH = "STRENGTH",
+    DEXTERITY = "DEXTERITY",
+    CONSTITUTION = "CONSTITUTION",
+    INTELLIGENCE = "INTELLIGENCE",
+    WISDOM = "WISDOM",
+    CHARISMA = "CHARISMA"
+}
+
+export enum DamageType {
+    SLASHING = "SLASHING",
+    PIERCING = "PIERCING",
+    BLUDGEONING = "BLUDGEONING",
+    POISON = "POISON",
+    ACID = "ACID",
+    FIRE = "FIRE",
+    COLD = "COLD",
+    RADIANT = "RADIANT",
+    NECROTIC = "NECROTIC",
+    LIGHTNING = "LIGHTNING",
+    THUNDER = "THUNDER",
+    FORCE = "FORCE",
+    PSYCHIC = "PSYCHIC"
+}
+
+export enum DamageMultiplier {
+    RESISTANCE = "RESISTANCE",
+    IMMUNITY = "IMMUNITY",
+    VULNERABILITY = "VULNERABILITY"
+}
+
+export enum Size {
+    TINY = "TINY",
+    SMALL = "SMALL",
+    MEDIUM = "MEDIUM",
+    LARGE = "LARGE",
+    HUGE = "HUGE",
+    GARGANTUAN = "GARGANTUAN"
+}
+
+export enum Condition {
+    BLINDED = "BLINDED",
+    CHARMED = "CHARMED",
+    DEAFENED = "DEAFENED",
+    FRIGHTENED = "FRIGHTENED",
+    GRAPPLED = "GRAPPLED",
+    INCAPACITATED = "INCAPACITATED",
+    INVISIBLE = "INVISIBLE",
+    PARALYZED = "PARALYZED",
+    PETRIFIED = "PETRIFIED",
+    POISONED = "POISONED",
+    PRONE = "PRONE",
+    RESTRAINED = "RESTRAINED",
+    STUNNED = "STUNNED",
+    UNCONSCIOUS = "UNCONSCIOUS",
+    EXHAUSTION = "EXHAUSTION"
+}
+
+export enum Race {
+    AASIMAR = "AASIMAR",
+    DRAGONBORN = "DRAGONBORN",
+    DWARF = "DWARF",
+    ELF = "ELF",
+    GNOME = "GNOME",
+    GOLIATH = "GOLIATH",
+    HALFLING = "HALFLING",
+    HUMAN = "HUMAN",
+    ORC = "ORC",
+    TIEFLING = "TIEFLING"
+}
+
+export enum Skill {
+    ATHLETICS = "ATHLETICS",
+    ACROBATICS = "ACROBATICS",
+    SLEIGHT_OF_HAND = "SLEIGHT_OF_HAND",
+    STEALTH = "STEALTH",
+    ARCANA = "ARCANA",
+    HISTORY = "HISTORY",
+    INVESTIGATION = "INVESTIGATION",
+    NATURE = "NATURE",
+    RELIGION = "RELIGION",
+    ANIMAL_HANDING = "ANIMAL_HANDING",
+    INSIGHT = "INSIGHT",
+    MEDICINE = "MEDICINE",
+    PERCEPTION = "PERCEPTION",
+    SURVIVAL = "SURVIVAL",
+    DECEPTION = "DECEPTION",
+    INTIMIDATION = "INTIMIDATION",
+    PERFORMANCE = "PERFORMANCE",
+    PERSUASION = "PERSUASION",
+}
+
+export enum DndClassType {
+    BARBARIAN = "BARBARIAN",
+    BARD = "BARD",
+    CLERIC = "CLERIC",
+    DRUID = "DRUID",
+    FIGHTER = "FIGHTER",
+    MONK = "MONK",
+    PALADIN = "PALADIN",
+    RANGER = "RANGER",
+    ROGUE = "ROGUE",
+    SORCERER = "SORCERER",
+    WARLOCK = "WARLOCK",
+    WIZARD = "WIZARD"
+}
+
+export enum CharacterDescription{
+    TEST = "TEST"
+}
+
+export enum Orientation {
+    S ="S",
+    E = "E",
+    SE = "SE",
+    SW = "SW"
+}
