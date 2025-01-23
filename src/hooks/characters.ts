@@ -1,5 +1,6 @@
-import {ICampaign} from "../models";
-import {useState} from "react";
+import {ICampaign, ICampaignsPage, ICharacter, ICharactersPage} from "../models";
+import {useEffect, useState} from "react";
+import axios, {AxiosError} from "axios";
 
 interface useCharactersProps {
     campaignId: number;
@@ -9,7 +10,44 @@ interface useCharactersProps {
 }
 
 export function useCharacters(props: useCharactersProps) {
-    const [characters, setCharacters] = useState<ICampaign[]>([])
+    const [characters, setCharacters] = useState<ICharacter[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const campaignId = props.campaignId;
+    const locationId = props.locationId;
+
+    async function fetchCharacters() {
+        try {
+            setError('')
+            setLoading(true)
+            if (locationId !== null) {
+                const response = await axios<ICharactersPage>({
+                    method: "get",
+                    baseURL: `http://localhost:8080/character/page-location/${locationId}`,
+                    params: {page: props.page, size: props.size}
+                })
+                setCharacters(response.data.content)
+            }
+            else {
+                const response = await axios<ICharactersPage>({
+                    method: "get",
+                    baseURL: `http://localhost:8080/character/page-campaign/${campaignId}`,
+                    params: {page: props.page, size: props.size}
+                })
+                setCharacters(response.data.content)
+            }
+            setLoading(false)
+        } catch (e: unknown) {
+            const error = e as AxiosError
+            setLoading(false)
+            setError(error.message)
+
+        }
+    }
+
+    useEffect(() => {
+        fetchCharacters()
+    }, []);
+
+    return{characters, error, loading};
 }

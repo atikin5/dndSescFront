@@ -48,7 +48,7 @@ export interface IAbilities {
     charisma: number;
 }
 
-export interface IDestructible {
+export interface IDestructible extends ICampaignObject{
     operational: boolean;
     currentHp: number;
     maxHp: number;
@@ -85,7 +85,7 @@ export interface IClass {
     type: DndClassType;
 }
 
-export interface IModifiableObject {
+export interface IModifiableObject extends ICampaignObject{
     operational: boolean;
     currentHp: number;
     maxHp: number;

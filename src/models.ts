@@ -67,3 +67,7 @@ export interface IDoor extends IModifiableObject{
 export interface ITile extends ICampaignObject {
     visibleByCharacter: boolean | null;
 }
+
+export interface ICharactersPage extends IPage {
+    content: ICharacter;
+}
