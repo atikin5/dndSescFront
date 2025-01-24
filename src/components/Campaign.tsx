@@ -3,11 +3,13 @@ import {ICampaign} from "../models";
 
 interface CampaignProps {
     campaign: ICampaign
+    key: number
 }
 
 export function Campaign({campaign}: CampaignProps) {
 
-    return (<tr>
+    return (
+        <tr>
         <td>{campaign.title}</td>
         <td>{campaign.status}</td>
         <td>{campaign.code}</td>

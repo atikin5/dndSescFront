@@ -1,6 +1,6 @@
 import {ICampaign, ICampaignsPage, ICharacter, ICharactersPage} from "../models";
 import {useEffect, useState} from "react";
-import axios, {AxiosError} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 
 interface useCharactersProps {
     campaignId: number;
@@ -10,6 +10,7 @@ interface useCharactersProps {
 }
 
 export function useCharacters(props: useCharactersProps) {
+    //TODO проверка наличия хотя бы одного id
     const [characters, setCharacters] = useState<ICharacter[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -21,7 +22,7 @@ export function useCharacters(props: useCharactersProps) {
             setError('')
             setLoading(true)
             if (locationId !== null) {
-                const response = await axios<ICharactersPage>({
+                const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/character/page-location/${locationId}`,
                     params: {page: props.page, size: props.size}
@@ -29,7 +30,7 @@ export function useCharacters(props: useCharactersProps) {
                 setCharacters(response.data.content)
             }
             else {
-                const response = await axios<ICharactersPage>({
+                const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/character/page-campaign/${campaignId}`,
                     params: {page: props.page, size: props.size}

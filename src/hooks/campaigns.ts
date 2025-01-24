@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {ICampaign, ICampaignsPage} from "../models";
-import axios, {AxiosError} from 'axios'
+import axios, {AxiosError, AxiosResponse} from 'axios'
 
 interface useCampaignsProps {
     page: number;
@@ -16,7 +16,7 @@ export function useCampaigns(props: useCampaignsProps) {
         try {
             setError('')
             setLoading(true)
-            const response = await axios<ICampaignsPage>({
+            const response: AxiosResponse = await axios<ICampaignsPage>({
                 method: "get",
                 baseURL: `http://localhost:8080/campaign/page`,
                 params: {page: props.page, size: props.size}

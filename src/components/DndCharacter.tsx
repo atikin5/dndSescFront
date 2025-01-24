@@ -2,7 +2,7 @@ import React from 'react';
 import {ICharacter} from "../models";
 
 interface CharacterProps {
-    character: ICharacter;
+    character: ICharacter
 }
 
 export function DndCharacter({character}: CharacterProps) {
