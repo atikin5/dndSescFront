@@ -4,8 +4,7 @@ interface CreatureTableProps {
     creatures: ReactNode
 }
 
-export function CreatureTable() {
-
+export function CreatureTable({creatures}: CreatureTableProps) {
     return (
         <table>
             <thead>
@@ -17,5 +16,8 @@ export function CreatureTable() {
                 <th>Перейти на локацию</th>
             </tr>
             </thead>
+            <tbody>
+            {creatures}
+            </tbody>
         </table>)
 }

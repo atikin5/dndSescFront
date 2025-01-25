@@ -2,14 +2,14 @@ import {ICampaign, ICampaignsPage, ICharacter, ICharactersPage} from "../models"
 import {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 
-interface useCharactersProps {
+interface useDndCharactersProps {
     campaignId: number;
     locationId: number;
     page: number;
     size: number
 }
 
-export function useCharacters(props: useCharactersProps) {
+export function useDndCharacters(props: useDndCharactersProps) {
     //TODO проверка наличия хотя бы одного id
     const [characters, setCharacters] = useState<ICharacter[]>([])
     const [loading, setLoading] = useState(false)
