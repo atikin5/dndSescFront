@@ -1,5 +1,6 @@
 import React from 'react';
 import {ICampaign} from "../models";
+import {Link} from "react-router-dom";
 
 interface CampaignProps {
     campaign: ICampaign
@@ -17,7 +18,7 @@ export function Campaign({campaign}: CampaignProps) {
             <td>{campaign.startedAt}</td>
             <td>{campaign.completedAt}</td>
             <td>
-                <button></button>
+                <Link to={`/campaign/${campaign.id}`}>Перейти</Link>
             </td>
         </tr>)
 }

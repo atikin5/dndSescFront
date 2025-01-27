@@ -4,7 +4,7 @@ interface DndCharacterTableProps {
     dndCharacters: ReactNode
 }
 
-export function CreatureTable({dndCharacters}: DndCharacterTableProps) {
+export function DndCharacterTable({dndCharacters}: DndCharacterTableProps) {
     return (
         <table>
             <thead>
@@ -13,7 +13,8 @@ export function CreatureTable({dndCharacters}: DndCharacterTableProps) {
                 <th>Здоровье</th>
                 <th>Броня</th>
                 <th>Локация</th>
-                <th>Перейти на локацию</th>
+                <th>Перейти к локации</th>
+                <th>Редактировать</th>
             </tr>
             </thead>
             <tbody>

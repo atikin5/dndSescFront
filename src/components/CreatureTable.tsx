@@ -13,7 +13,8 @@ export function CreatureTable({creatures}: CreatureTableProps) {
                 <th>Здоровье</th>
                 <th>Броня</th>
                 <th>Локация</th>
-                <th>Перейти на локацию</th>
+                <th>Перейти к локации</th>
+                <th>Редактировать</th>
             </tr>
             </thead>
             <tbody>

@@ -1,21 +1,19 @@
 import {useEffect, useState} from "react";
-import {ICharacter, ICharactersPage} from "../models";
+import {ICharacter, ICharactersPage, ICreature} from "../models";
 import axios, {AxiosError, AxiosResponse} from "axios";
 
 interface useCreaturesProps {
-    campaignId: number;
-    locationId: number;
-    page: number;
+    campaignId: string | null
+    locationId: string | null
+    page: number
     size: number
 }
 
-export function useCreatures(props: useCreaturesProps) {
+export function useCreatures({campaignId, locationId, page, size}: useCreaturesProps) {
     //TODO проверка наличия хотя бы одного id
-    const [creatures, setCreatures] = useState<ICharacter[]>([])
+    const [creatures, setCreatures] = useState<ICreature[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const campaignId = props.campaignId;
-    const locationId = props.locationId;
 
     async function fetchCreatures() {
         try {
@@ -25,7 +23,7 @@ export function useCreatures(props: useCreaturesProps) {
                 const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/creature/page-location/${locationId}`,
-                    params: {page: props.page, size: props.size}
+                    params: {page: page, size: size}
                 })
                 setCreatures(response.data.content)
             }
@@ -33,7 +31,7 @@ export function useCreatures(props: useCreaturesProps) {
                 const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/creature/page-campaign/${campaignId}`,
-                    params: {page: props.page, size: props.size}
+                    params: {page: page, size: size}
                 })
                 setCreatures(response.data.content)
             }
@@ -48,7 +46,7 @@ export function useCreatures(props: useCreaturesProps) {
 
     useEffect(() => {
         fetchCreatures()
-    }, []);
+    }, [])
 
-    return{creatures, error, loading};
+    return{creatures, creaturesError: error, creaturesLoading: loading}
 }

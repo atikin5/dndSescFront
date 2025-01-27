@@ -21,6 +21,20 @@ export interface ICampaign {
     completedAt: string
 }
 
+export interface ILocation {
+    id: number
+    name: string
+}
+
+export interface IFullLocation extends ILocation {
+    dndCharacters: ICharacter[]
+    creatures: ICreature[]
+    destructibleObjects: IDestructibleObject[]
+    tiles: ITile[]
+    walls: IWall[]
+    doors: IDoor[]
+}
+
 export interface IItem extends ICampaignObject{
     name: string
     description: string

@@ -5,9 +5,8 @@ import {ErrorMessage} from "../components/ErrorMessage";
 import {ICampaign} from "../models";
 import {Campaign} from "../components/Campaign";
 import {CampaignTable} from "../components/CampaignTable";
-import {BasicTabs} from "../components/Tabs";
 
-export function MasterPage() {
+export function CampaignsPage() {
     const page: number = 0
     const size: number = 5
     const {campaigns, error, loading} = useCampaigns({page: page, size: size})
@@ -16,7 +15,6 @@ export function MasterPage() {
             <CampaignTable
                 campaigns={campaigns.map((campaign: ICampaign) => <Campaign campaign={campaign} key={campaign.id}/>)}
             />
-            <BasicTabs/>
             <div>
                 {loading && <Loader/>}
                 {error && <ErrorMessage error={error}/>}

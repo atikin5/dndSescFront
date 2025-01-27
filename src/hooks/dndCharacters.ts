@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
 
 interface useDndCharactersProps {
-    campaignId: number;
-    locationId: number;
-    page: number;
+    campaignId: string
+    locationId: string
+    page: number
     size: number
 }
 
@@ -14,8 +14,10 @@ export function useDndCharacters(props: useDndCharactersProps) {
     const [characters, setCharacters] = useState<ICharacter[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const campaignId = props.campaignId;
-    const locationId = props.locationId;
+    const campaignId = props.campaignId
+    const locationId = props.locationId
+    const page = props.page
+    const size = props.size
 
     async function fetchCharacters() {
         try {
@@ -25,7 +27,7 @@ export function useDndCharacters(props: useDndCharactersProps) {
                 const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/character/page-location/${locationId}`,
-                    params: {page: props.page, size: props.size}
+                    params: {page: page, size: size}
                 })
                 setCharacters(response.data.content)
             }
@@ -33,7 +35,7 @@ export function useDndCharacters(props: useDndCharactersProps) {
                 const response: AxiosResponse = await axios<ICharactersPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/character/page-campaign/${campaignId}`,
-                    params: {page: props.page, size: props.size}
+                    params: {page: page, size: size}
                 })
                 setCharacters(response.data.content)
             }
@@ -48,7 +50,7 @@ export function useDndCharacters(props: useDndCharactersProps) {
 
     useEffect(() => {
         fetchCharacters()
-    }, []);
+    }, [])
 
-    return{characters, error, loading};
+    return{characters, characterError: error, characterLoading: loading}
 }

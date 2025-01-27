@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, {ReactElement, ReactNode} from "react";
 import {Box, Tab, Tabs} from "@mui/material";
 
 interface TabPanelProps {
@@ -30,39 +30,47 @@ function a11yProps(index: number) {
 }
 
 interface BasicTabsProps {
-    tabsBody: object[]
-    tabsHead: object[]
+    name: string
+    tabsBody: ReactElement<any, any>[]
+    tabsHead: any[]
 }
 
-export function BasicTabs({tabsBody, tabsHead}: BasicTabsProps) {
+export function BasicTabs({tabsBody, tabsHead, name}: BasicTabsProps) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
-    function ConstructTabsContent() {
+    function ConstructTabsHeader() {
+        let tabsHeads: ReactElement[] = [];
+        for (let i = 0; i < tabsHead.length; i++) {
+            tabsHeads.push(
+                <Tab label={tabsHead[i]} {...a11yProps(i)} key={i}/>
+            )
+        }
+        return (tabsHeads)
+    }
 
+    function ConstructTabsContent() {
+        let tabsContent: ReactNode[] = []
+        for (let i = 0; i < tabsBody.length; i++) {
+            tabsContent.push(
+                <CustomTabPanel value={value} index={i} key={i}>
+                    {tabsBody[i]}
+                </CustomTabPanel>)
+        }
+        return tabsContent;
     }
 
     return (
         <Box sx={{width: '100%'}}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Item One" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
+                <Tabs value={value} onChange={handleChange} aria-label={name}>
+                    {ConstructTabsHeader()}
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
-                Item One
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                Item Two
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                Item Three
-            </CustomTabPanel>
+            {ConstructTabsContent()}
         </Box>
     )
 }

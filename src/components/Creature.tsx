@@ -1,9 +1,10 @@
 import React from "react";
 import {ICreature} from "../models";
+import {Link} from "react-router-dom";
 
 interface CreatureProps {
-    creature: ICreature;
-    key: number;
+    creature: ICreature
+    key: number
 }
 
 export function Creature({creature}: CreatureProps) {
@@ -14,7 +15,10 @@ export function Creature({creature}: CreatureProps) {
             <td>{creature.armorClass}</td>
             <td>{creature.locationId}</td>
             <td>
-                <button></button>
+                <Link to={`/location/${creature.locationId}`}>Перейти к локации</Link>
+            </td>
+            <td>
+                <Link to={`/creature/${creature.id}`}>Редактировать</Link>
             </td>
         </tr>)
 }
