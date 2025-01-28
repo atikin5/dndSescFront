@@ -8,7 +8,8 @@ import {ICharacter, ICreature} from "../models";
 import {Creature} from "../components/Creature";
 import {DndCharacterTable} from "../components/DndCharacterTable";
 import {DndCharacter} from "../components/DndCharacter";
-
+import {Loader} from "../components/Loader";
+import {ErrorMessage} from "../components/ErrorMessage";
 
 export function LocationFullPage() {
     const {locationId} = useParams()
@@ -21,7 +22,7 @@ export function LocationFullPage() {
         locationId: locationId
     })
 
-    const {characters, characterError, characterLoading} = useDndCharacters({
+    const {characters, charactersError, charactersLoading} = useDndCharacters({
         page: page,
         size: size,
         campaignId: null,
@@ -31,19 +32,36 @@ export function LocationFullPage() {
     return (
         <div>
             <BasicTabs name="location" tabsBody={[
-                <CreatureTable
-                    creatures={creatures.map((creature: ICreature) =>
-                        <Creature
-                            creature={creature}
-                            key={creature.id}/>)}
-                />,
-                <DndCharacterTable
-                    dndCharacters={characters.map((character: ICharacter) =>
-                        <DndCharacter
-                            character={character}
-                            key={character.id}/>)}
-                />,
-
+                <>
+                    {creaturesLoading && <Loader/>}
+                    {creaturesError && <ErrorMessage error={creaturesError}/>}
+                    {
+                        !creaturesLoading &&
+                        !creaturesError &&
+                        <CreatureTable
+                            creatures={creatures.map((creature: ICreature) =>
+                                <Creature
+                                    creature={creature}
+                                    key={creature.id}
+                                    location={false}/>)}
+                            location={false}/>
+                    }
+                </>,
+                <>
+                    {charactersLoading && <Loader/>}
+                    {charactersError && <ErrorMessage error={charactersError}/>}
+                    {
+                        !charactersLoading &&
+                        !charactersError &&
+                        <DndCharacterTable
+                            dndCharacters={characters.map((character: ICharacter) =>
+                                <DndCharacter
+                                    character={character}
+                                    key={character.id}
+                                    location={false}/>)}
+                            location={false}/>
+                    }
+                </>,
             ]}
                        tabsHead={["creatures", "characters"]}
             />

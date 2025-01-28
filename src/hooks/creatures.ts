@@ -40,7 +40,6 @@ export function useCreatures({campaignId, locationId, page, size}: useCreaturesP
             const error = e as AxiosError
             setLoading(false)
             setError(error.message)
-
         }
     }
 

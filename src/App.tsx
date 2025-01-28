@@ -4,7 +4,6 @@ import {CampaignsPage} from "./pages/CampaignsPage";
 import {CampaignFullPage} from "./pages/CampaignFullPage";
 import {LocationFullPage} from "./pages/LocationFullPage";
 
-
 export default function App() {
     return (
         <Routes>

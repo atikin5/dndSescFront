@@ -1,10 +1,11 @@
 import React, {ReactNode} from "react";
 
 interface DndCharacterTableProps {
+    location: boolean
     dndCharacters: ReactNode
 }
 
-export function DndCharacterTable({dndCharacters}: DndCharacterTableProps) {
+export function DndCharacterTable({dndCharacters, location}: DndCharacterTableProps) {
     return (
         <table>
             <thead>
@@ -12,8 +13,8 @@ export function DndCharacterTable({dndCharacters}: DndCharacterTableProps) {
                 <th>Тип</th>
                 <th>Здоровье</th>
                 <th>Броня</th>
-                <th>Локация</th>
-                <th>Перейти к локации</th>
+                {location && <th>Локация</th>}
+                {location && <th>Перейти к локации</th>}
                 <th>Редактировать</th>
             </tr>
             </thead>

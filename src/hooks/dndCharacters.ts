@@ -9,17 +9,12 @@ interface useDndCharactersProps {
     size: number
 }
 
-export function useDndCharacters(props: useDndCharactersProps) {
+export function useDndCharacters({campaignId, locationId, page, size}: useDndCharactersProps) {
     //TODO проверка наличия хотя бы одного id
     const [characters, setCharacters] = useState<ICharacter[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const campaignId = props.campaignId
-    const locationId = props.locationId
-    const page = props.page
-    const size = props.size
-
-    async function fetchCharacters() {
+    async function fetchDndCharacters() {
         try {
             setError('')
             setLoading(true)
@@ -44,13 +39,12 @@ export function useDndCharacters(props: useDndCharactersProps) {
             const error = e as AxiosError
             setLoading(false)
             setError(error.message)
-
         }
     }
 
     useEffect(() => {
-        fetchCharacters()
+        fetchDndCharacters()
     }, [])
 
-    return{characters, characterError: error, characterLoading: loading}
+    return{characters, charactersError: error, charactersLoading: loading}
 }

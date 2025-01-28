@@ -34,5 +34,5 @@ export function useLocations({campaignId, page, size}: useLocationProps) {
         fetchLocations()
     }, [])
 
-    return {locations, locationError: error, locationLoading: loading}
+    return {locations, locationsError: error, locationsLoading: loading}
 }
