@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
-import {ModalContext} from "../context/ModalContext";
-import {EditCreatureModal} from "./EditCreatureModal";
-import {EditDndCharacter} from "./EditDndCharacter";
+import {ModalContext} from "../../context/ModalContext";
+import {EditCreatureModal} from "../EditCreatureModal";
+import {EditDndCharacter} from "../EditDndCharacter";
 
 interface ModalProps {
     modalTitle: string

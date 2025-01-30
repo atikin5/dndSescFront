@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICampaign} from "../models";
+import {ICampaign} from "../../models";
 import {Link} from "react-router-dom";
 import moment from "moment";
 

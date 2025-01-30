@@ -1,20 +1,20 @@
 import React, {useContext} from "react";
-import {BasicTabs} from "../components/Tabs";
-import {CreatureTable} from "../components/CreatureTable";
+import {BasicTabs} from "../components/references/Tabs";
+import {CreatureTable} from "../components/tables/CreatureTable";
 import {useCreatures} from "../hooks/creatures";
 import {useParams} from "react-router-dom";
-import {DndCharacterTable} from "../components/DndCharacterTable";
+import {DndCharacterTable} from "../components/tables/DndCharacterTable";
 import {ICharacter, ICreature, IFullLocation, ILocation} from "../models";
-import {Creature} from "../components/Creature";
+import {Creature} from "../components/tables/Creature";
 import {useDndCharacters} from "../hooks/dndCharacters";
-import {DndCharacter} from "../components/DndCharacter";
-import {LocationTable} from "../components/LocationTable";
+import {DndCharacter} from "../components/tables/DndCharacter";
+import {LocationTable} from "../components/tables/LocationTable";
 import {useLocations} from "../hooks/locations";
-import {DndLocation} from "../components/Location";
-import {Loader} from "../components/Loader";
-import {ErrorMessage} from "../components/ErrorMessage";
+import {DndLocation} from "../components/tables/Location";
+import {Loader} from "../components/references/Loader";
+import {ErrorMessage} from "../components/references/ErrorMessage";
 import {ModalContext} from "../context/ModalContext";
-import {Modal} from "../components/Modal";
+import {Modal} from "../components/references/Modal";
 
 
 export function CampaignFullPage() {

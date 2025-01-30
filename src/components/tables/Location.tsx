@@ -1,5 +1,5 @@
 import React from "react";
-import {IFullLocation} from "../models";
+import {IFullLocation} from "../../models";
 import {Link} from "react-router-dom";
 
 interface LocationProps {

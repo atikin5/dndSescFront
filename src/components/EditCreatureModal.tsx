@@ -1,7 +1,7 @@
 import React from "react";
 import {useCreature} from "../hooks/creature";
-import {Loader} from "./Loader";
-import {ErrorMessage} from "./ErrorMessage";
+import {Loader} from "./references/Loader";
+import {ErrorMessage} from "./references/ErrorMessage";
 import {ICreature} from "../models";
 import {EditCreature} from "./EditCreature";
 
