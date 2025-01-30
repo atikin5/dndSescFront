@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {ICharacter, ICharactersPage, ICreature} from "../models";
+import {ICharacter, ICharactersPage, ICreature, ICreaturesPage} from "../models";
 import axios, {AxiosError, AxiosResponse} from "axios";
 
 interface useCreaturesProps {
@@ -20,7 +20,7 @@ export function useCreatures({campaignId, locationId, page, size}: useCreaturesP
             setError('')
             setLoading(true)
             if (locationId !== null) {
-                const response: AxiosResponse = await axios<ICharactersPage>({
+                const response: AxiosResponse = await axios<ICreaturesPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/creature/page-location/${locationId}`,
                     params: {page: page, size: size}
@@ -28,7 +28,7 @@ export function useCreatures({campaignId, locationId, page, size}: useCreaturesP
                 setCreatures(response.data.content)
             }
             else {
-                const response: AxiosResponse = await axios<ICharactersPage>({
+                const response: AxiosResponse = await axios<ICreaturesPage>({
                     method: "get",
                     baseURL: `http://localhost:8080/creature/page-campaign/${campaignId}`,
                     params: {page: page, size: size}

@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useCreatures} from "../hooks/creatures";
 import {useDndCharacters} from "../hooks/dndCharacters";
-import React from "react";
+import React, {useContext} from "react";
 import {BasicTabs} from "../components/Tabs";
 import {CreatureTable} from "../components/CreatureTable";
 import {ICharacter, ICreature} from "../models";
@@ -10,6 +10,8 @@ import {DndCharacterTable} from "../components/DndCharacterTable";
 import {DndCharacter} from "../components/DndCharacter";
 import {Loader} from "../components/Loader";
 import {ErrorMessage} from "../components/ErrorMessage";
+import {Modal} from "../components/Modal";
+import {ModalContext} from "../context/ModalContext";
 
 export function LocationFullPage() {
     const {locationId} = useParams()
@@ -29,8 +31,10 @@ export function LocationFullPage() {
         locationId: locationId
     })
 
+    const {modal, modalType} = useContext(ModalContext)
+
     return (
-        <div>
+        <div className="select-none">
             <BasicTabs name="location" tabsBody={[
                 <>
                     {creaturesLoading && <Loader/>}
@@ -65,5 +69,6 @@ export function LocationFullPage() {
             ]}
                        tabsHead={["creatures", "characters"]}
             />
+            {modal && <Modal modalTitle={""}/>}
         </div>)
 }

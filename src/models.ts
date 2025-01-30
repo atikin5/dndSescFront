@@ -81,5 +81,9 @@ export interface ITile extends ICampaignObject {
 }
 
 export interface ICharactersPage extends IPage {
-    content: ICharacter
+    content: ICharacter[]
+}
+
+export interface ICreaturesPage extends IPage {
+    content: ICreature[]
 }

@@ -11,7 +11,7 @@ export function CampaignsPage() {
     const size: number = 5
     const {campaigns, error, loading} = useCampaigns({page: page, size: size})
     return (
-        <div>
+        <div className="select-none">
             <CampaignTable
                 campaigns={campaigns.map((campaign: ICampaign) => <Campaign campaign={campaign} key={campaign.id}/>)}
             />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {BasicTabs} from "../components/Tabs";
 import {CreatureTable} from "../components/CreatureTable";
 import {useCreatures} from "../hooks/creatures";
@@ -13,12 +13,16 @@ import {useLocations} from "../hooks/locations";
 import {DndLocation} from "../components/Location";
 import {Loader} from "../components/Loader";
 import {ErrorMessage} from "../components/ErrorMessage";
+import {ModalContext} from "../context/ModalContext";
+import {Modal} from "../components/Modal";
 
 
 export function CampaignFullPage() {
     const {campaignId} = useParams();
     const page: number = 0
     const size: number = 5
+
+    const {modal, openModal, closeModal} = useContext(ModalContext)
 
     const {locations, locationsError, locationsLoading} = useLocations({
         page: page,
@@ -42,7 +46,7 @@ export function CampaignFullPage() {
 
 
     return (
-        <div>
+        <div className="select-none">
             <BasicTabs name="campaign" tabsBody={[
                 <>
                     {locationsLoading && <Loader/>}
@@ -90,7 +94,7 @@ export function CampaignFullPage() {
             ]}
                        tabsHead={["locations", "creatures", "characters"]}
             />
-
+            {modal && <Modal modalTitle={""}/>}
         </div>
     )
 }

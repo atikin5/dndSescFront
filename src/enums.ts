@@ -115,3 +115,8 @@ export enum Orientation {
     SE = "SE",
     SW = "SW"
 }
+
+export enum Editable {
+    DND_CHARACTER = "DND_CHARACTER",
+    CREATURE = "CREATURE"
+}

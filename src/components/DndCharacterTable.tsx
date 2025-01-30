@@ -13,7 +13,6 @@ export function DndCharacterTable({dndCharacters, location}: DndCharacterTablePr
                 <th>Тип</th>
                 <th>Здоровье</th>
                 <th>Броня</th>
-                {location && <th>Локация</th>}
                 {location && <th>Перейти к локации</th>}
                 <th>Редактировать</th>
             </tr>

@@ -3,12 +3,15 @@ import {Route, Routes} from "react-router-dom";
 import {CampaignsPage} from "./pages/CampaignsPage";
 import {CampaignFullPage} from "./pages/CampaignFullPage";
 import {LocationFullPage} from "./pages/LocationFullPage";
+import {ModalState} from "./context/ModalContext";
 
 export default function App() {
     return (
-        <Routes>
-            <Route path="/" element={<CampaignsPage/>}/>
-            <Route path="/campaign/:campaignId"  element={<CampaignFullPage/>}/>
-            <Route path="/location/:locationId" element={<LocationFullPage/>}/>
-        </Routes>)
+        <ModalState>
+            <Routes>
+                <Route path="/" element={<CampaignsPage/>}/>
+                <Route path="/campaign/:campaignId" element={<CampaignFullPage/>}/>
+                <Route path="/location/:locationId" element={<LocationFullPage/>}/>
+            </Routes>
+        </ModalState>)
 }
