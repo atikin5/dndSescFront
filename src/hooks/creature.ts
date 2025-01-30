@@ -7,7 +7,7 @@ interface useCreatureProps {
 }
 
 export function useCreature({creatureId}: useCreatureProps) {
-    const [creature, setCreature] = useState<ICreature>()
+    const [creature, setCreature] = useState<ICreature[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
@@ -15,11 +15,12 @@ export function useCreature({creatureId}: useCreatureProps) {
         try {
             setError('')
             setLoading(true)
-            const response: AxiosResponse = await axios<ICreature>({
+            const response: AxiosResponse = await axios({
                 method: "get",
                 baseURL: `http://localhost:8080/creature/${creatureId}`,
             })
-            setCreature(response.data.content)
+            setCreature([response.data])
+            console.log(response.data)
             setLoading(false)
         } catch (e: unknown) {
             const error = e as AxiosError

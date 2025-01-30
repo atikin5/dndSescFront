@@ -1,16 +1,15 @@
 import React from "react";
-import {Editable} from "../enums";
+import {ICreature} from "../models";
 
-interface EditProps {
-    editedId: number
+interface EditCreatureProps {
+    creature: ICreature
 }
 
-export function EditCreature({editedId}: EditProps) {
+export function EditCreature({creature}: EditCreatureProps) {
 
-
-
-    return(
-        <>
-        </>
+    return (
+        <div>
+            <div>{creature.type}</div>
+        </div>
     )
 }
