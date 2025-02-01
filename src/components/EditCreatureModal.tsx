@@ -15,7 +15,7 @@ export function EditCreatureModal({editedId}: EditCreatureModal) {
     return (
         <div>
             <div>
-                {creature.map((creature: ICreature) => <EditCreature creature={creature}/>)}
+                {creature.map((creature: ICreature) => <EditCreature creature={creature} />)}
             </div>
             {creatureError && <ErrorMessage error={creatureError}/>}
             {creatureLoading && <Loader/>}
