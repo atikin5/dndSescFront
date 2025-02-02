@@ -1,88 +1,55 @@
 import React from 'react';
 import {IItem} from "../../models";
 
+
+
 const ItemList = ({
-                      backpackItems,
-                      equippedItems,
-                      newItems,
-                      onAddToBackpack,
-                      onEquipItem,
-                      onUnequipItem,
-                      onDropItem,
+                      title,
+                      items,
+                      onItemClick,
+                      onDrop,
+                      buttonText,
+                      showDrop = false,
+                      containerStyle = "bg-gray-800", // Дефолтный стиль
                   }: {
-    backpackItems: IItem[];
-    equippedItems: IItem[];
-    newItems: IItem[];
-    onAddToBackpack: (item: IItem) => void;
-    onEquipItem: (item: IItem) => void;
-    onUnequipItem: (item: IItem) => void;
-    onDropItem: (item: IItem) => void;
+    title: string;
+    items: IItem[];
+    onItemClick: (item: IItem) => void;
+    onDrop?: (item: IItem) => void;
+    buttonText: string;
+    showDrop?: boolean;
+    containerStyle?: string; // Стиль контейнера
 }) => {
     return (
-        <div className="mb-4">
-            <h2 className="text-xl font-bold mb-2">Items</h2>
-
-            {/* New Items */}
-            <div className="mb-2">
-                <h3 className="font-bold">New Items</h3>
-                <ul className="max-h-32 overflow-y-auto" style={{ scrollbarColor: 'yellow black' }}>
-                    {newItems.map((item) => (
-                        <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1">
-                            <span>{item.name}</span>
-                            <button
-                                onClick={() => onAddToBackpack(item)}
-                                className="bg-yellow-400 text-black px-2 py-1 rounded"
-                            >
-                                Add to Backpack
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            {/* Backpack Items */}
-            <div className="mb-2">
-                <h3 className="font-bold">Backpack</h3>
-                <ul className="max-h-32 overflow-y-auto" style={{ scrollbarColor: 'yellow black' }}>
-                    {backpackItems.map((item) => (
-                        <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1">
+        <div className={`flex-1 ${containerStyle} rounded-lg p-2`}>
+            <h3 className="font-bold text-center mb-2">{title}</h3>
+            <ul className="max-h-40 overflow-y-auto" style={{ scrollbarColor: 'yellow black' }}>
+                {items.length > 0 ? (
+                    items.map((item) => (
+                        <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1 rounded">
                             <span>{item.name}</span>
                             <div>
                                 <button
-                                    onClick={() => onEquipItem(item)}
+                                    onClick={() => onItemClick(item)}
                                     className="bg-yellow-400 text-black px-2 py-1 rounded mr-2"
                                 >
-                                    Equip
+                                    {buttonText}
                                 </button>
-                                <button
-                                    onClick={() => onDropItem(item)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded"
-                                >
-                                    Drop
-                                </button>
+                                {showDrop && (
+                                    <button
+                                        onClick={() => onDrop?.(item)}
+                                        className="bg-red-500 text-white px-2 py-1 rounded"
+                                    >
+                                        Drop
+                                    </button>
+                                )}
                             </div>
                         </li>
-                    ))}
-                </ul>
-            </div>
-
-            {/* Equipped Items */}
-            <div>
-                <h3 className="font-bold">Equipped</h3>
-                <ul className="max-h-32 overflow-y-auto" style={{ scrollbarColor: 'yellow black' }}>
-                    {equippedItems.map((item) => (
-                        <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1">
-                            <span>{item.name}</span>
-                            <button
-                                onClick={() => onUnequipItem(item)}
-                                className="bg-yellow-400 text-black px-2 py-1 rounded"
-                            >
-                                Unequip
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    ))
+                ) : (
+                    <li className="text-center text-gray-400 italic">No items</li>
+                )}
+            </ul>
         </div>
     );
 };

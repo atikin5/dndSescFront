@@ -6,6 +6,15 @@ const AbilityInput = ({ ability, value, onChange }: { ability: string; value: nu
         onChange(newValue);
     };
 
+    const validateAndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const regex = /^(0|[1-9]\d*)$/; // Разрешает только натуральные числа
+        if (regex.test(rawValue)) {
+            const newValue = Number(rawValue);
+            onChange(Math.min(30, Math.max(8, newValue))); // Ограничиваем диапазон
+        }
+    };
+
     return (
         <div className="flex flex-col items-center">
             <span className="text-sm">{ability.toUpperCase()}</span>
@@ -17,13 +26,14 @@ const AbilityInput = ({ ability, value, onChange }: { ability: string; value: nu
                     -
                 </button>
                 <input
-                    type="number"
+                    type="text"
                     value={value}
-                    onChange={(e) => onChange(Number(e.target.value))}
-                    onBlur={(e) => onChange(Math.min(30, Math.max(8, Number(e.target.value))))} // Корректировка значения при потере фокуса
+                    onChange={validateAndChange}
+                    onBlur={(e) => {
+                        const newValue = Math.min(30, Math.max(8, Number(e.target.value)));
+                        onChange(newValue); // Корректировка значения при потере фокуса
+                    }}
                     className="w-16 text-center bg-gray-800 text-yellow-400 border border-yellow-400"
-                    min="8"
-                    max="30"
                 />
                 <button
                     onClick={() => handleChange(1)}

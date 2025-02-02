@@ -51,10 +51,10 @@ export interface IAbilities {
 
 export interface IDestructible extends ICampaignObject{
     operational: boolean
-    currentHp: number
-    maxHp: number
-    temporaryHp: number
-    armorClass: number
+    currentHp: number | null
+    maxHp: number | null
+    temporaryHp: number | null
+    armorClass: number | null
     damageMultipliers: Map<DamageType, DamageMultiplier>
     size: Size
     condition: Condition[]

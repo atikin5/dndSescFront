@@ -1,8 +1,14 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import CreatureForm from "./CreatureForm";
+import axios, {AxiosResponse} from "axios";
 
-export function CreatureModal() {
+interface CreatureModalProps {
+    campaignId: number
+    creatureId: number
+}
+
+export function CreatureModal({campaignId, creatureId}: CreatureModalProps) {
     {
         const [creature, setCreature] = useState(null);
         const [locations, setLocations] = useState([]);
@@ -11,7 +17,7 @@ export function CreatureModal() {
         useEffect(() => {
             // Имитация асинхронного получения данных
             const fetchData = async () => {
-                const creatureData = await fetchCreature();
+                const creatureData = await fetchCreature(creatureId);
                 const locationsData = await fetchLocations();
                 const itemsData = await fetchItems();
 
@@ -23,31 +29,36 @@ export function CreatureModal() {
             fetchData();
         }, []);
 
-        const fetchCreature = async () => {
+        const fetchCreature = async (creatureId: number) => {
+            const response: AxiosResponse = await axios({
+                method: "GET",
+                baseURL: `http://localhost:8080/creature/1`
+            })
+            return response.data;
             // Замените на реальный API-запрос
-            return {
-                locationId: 2,
-                operational: true,
-                currentHp: 50,
-                maxHp: 100,
-                temporaryHp: 0,
-                armorClass: 15,
-                size: 'MEDIUM',
-                condition: ['BLINDED', 'CHARMED'],
-                maxItemPosition: { handPosition: 2, fingerPosition: 2, headPosition: 1, bodyPosition: 1, footPosition: 2, cloakPosition: 1, legsPosition: 1, neckPosition: 1 },
-                backpackItems: [],
-                equippedItems: [],
-                abilities: { strength: 10, dexterity: 12, constitution: 14, intelligence: 8, wisdom: 10, charisma: 12 },
-                race: 'HUMAN',
-                maxMovement: 30,
-                movement: 30,
-                macAction: 1,
-                action: 1,
-                maxBonusAction: 1,
-                bonusAction: 1,
-                proficiencyBonus: 2,
-                skills: ['ATHLETICS', 'STEALTH'],
-            };
+            // return {
+            //     locationId: 2,
+            //     operational: true,
+            //     currentHp: 50,
+            //     maxHp: 100,
+            //     temporaryHp: 0,
+            //     armorClass: 15,
+            //     size: 'MEDIUM',
+            //     condition: ['BLINDED', 'CHARMED'],
+            //     maxItemPosition: { handPosition: 2, fingerPosition: 2, headPosition: 1, bodyPosition: 1, footPosition: 2, cloakPosition: 1, legsPosition: 1, neckPosition: 1 },
+            //     backpackItems: [],
+            //     equippedItems: [],
+            //     abilities: { strength: 10, dexterity: 12, constitution: 14, intelligence: 8, wisdom: 10, charisma: 12 },
+            //     race: 'HUMAN',
+            //     maxMovement: 30,
+            //     movement: 30,
+            //     macAction: 1,
+            //     action: 1,
+            //     maxBonusAction: 1,
+            //     bonusAction: 1,
+            //     proficiencyBonus: 2,
+            //     skills: ['ATHLETICS', 'STEALTH'],
+            // };
         };
 
         const fetchLocations = async () => {
