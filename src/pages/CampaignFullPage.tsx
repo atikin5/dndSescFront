@@ -4,7 +4,6 @@ import {CreatureTable} from "../components/tables/CreatureTable";
 import {useCreatures} from "../hooks/creatures";
 import {useParams} from "react-router-dom";
 import {DndCharacterTable} from "../components/tables/DndCharacterTable";
-import {ICharacter, ICreature, IFullLocation, ILocation} from "../models";
 import {Creature} from "../components/tables/Creature";
 import {useDndCharacters} from "../hooks/dndCharacters";
 import {DndCharacter} from "../components/tables/DndCharacter";
@@ -15,6 +14,9 @@ import {Loader} from "../components/references/Loader";
 import {ErrorMessage} from "../components/references/ErrorMessage";
 import {ModalContext} from "../context/ModalContext";
 import {Modal} from "../components/references/Modal";
+import {IFullLocation} from "../interfaces/IFullLocation";
+import {ICreature} from "../interfaces/ICreature";
+import {ICharacter} from "../interfaces/ICharacter";
 
 
 export function CampaignFullPage() {

@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import {ICharacter} from "../../models";
 import {Link} from "react-router-dom";
-import {Editable} from "../../enums";
 import {ModalContext} from "../../context/ModalContext";
+import {ICharacter} from "../../interfaces/ICharacter";
+import {Editable} from "../../enums/Editable";
 
 interface CharacterProps {
     location: boolean

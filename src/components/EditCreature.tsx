@@ -1,5 +1,5 @@
 import React from "react";
-import {ICreature} from "../models";
+import {ICreature} from "../interfaces/ICreature";
 
 interface EditCreatureProps {
     creature: ICreature

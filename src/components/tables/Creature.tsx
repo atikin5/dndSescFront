@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
-import {ICreature} from "../../models";
 import {Link} from "react-router-dom";
 import {ModalContext} from "../../context/ModalContext";
-import {Editable} from "../../enums";
+import {Editable} from "../../enums/Editable";
+import {ICreature} from "../../interfaces/ICreature";
 
 interface CreatureProps {
     location: boolean

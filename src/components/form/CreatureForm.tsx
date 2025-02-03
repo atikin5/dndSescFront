@@ -1,12 +1,17 @@
-import Select, {components , GroupBase } from "react-select"
-import React, { useEffect } from "react";
-import {Condition, Race, Size, Skill} from "../../enums";
+import Select, { GroupBase } from "react-select"
+import React from "react";
 import ItemList from "./ItemList";
-import {ICreature, IItem, ILocation} from "../../models";
 import ConditionSkillList from "./ConditionSkillList";
 import AbilityTable from "./AbilityTable";
 import {CreatureFormSchema} from "./CreatureFormSchema";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Size} from "../../enums/Size";
+import {Race} from "../../enums/Race";
+import {Skill} from "../../enums/Skill";
+import {ICreature} from "../../interfaces/ICreature";
+import {IItem} from "../../interfaces/IItem";
+import {ILocation} from "../../interfaces/ILocation";
+import {Condition} from "../../enums/Condition";
 
 interface OptionType {
     value: string;
@@ -20,22 +25,97 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
         label: loc.name,
         id: loc.id,
     }));
-    // State for filtered items (outside Formik)
-    const [filteredItems, setFilteredItems] = React.useState<IItem[]>(items);
 
-    // Filter New Items when `items`, `backpackItems`, or `equippedItems` change
-    useEffect(() => {
-        const filtered = items.filter(
-            (item) =>
-                !creature.backpackItems.some((i) => i.id === item.id) &&
-                !creature.equippedItems.some((i) => i.id === item.id)
+    // Состояние для ошибки
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+    // Функция для показа ошибки
+    const showError = (message: string) => {
+        setErrorMessage(message);
+        setTimeout(() => {
+            setErrorMessage(null);
+        }, 2000);
+    };
+
+    // Функция проверки itemPosition
+    const validateItemPositions = (
+        creature: ICreature,
+        equippedItems: IItem[],
+        newItem: IItem
+    ): string | null => {
+        const currentEquippedSum = equippedItems.reduce(
+            (acc, item) => {
+                acc.handPosition += item.itemPosition.handPosition || 0;
+                acc.fingerPosition += item.itemPosition.fingerPosition || 0;
+                acc.headPosition += item.itemPosition.headPosition || 0;
+                acc.bodyPosition += item.itemPosition.bodyPosition || 0;
+                acc.footPosition += item.itemPosition.footPosition || 0;
+                acc.cloakPosition += item.itemPosition.cloakPosition || 0;
+                acc.legsPosition += item.itemPosition.legsPosition || 0;
+                acc.neckPosition += item.itemPosition.neckPosition || 0;
+                return acc;
+            },
+            {
+                handPosition: 0,
+                fingerPosition: 0,
+                headPosition: 0,
+                bodyPosition: 0,
+                footPosition: 0,
+                cloakPosition: 0,
+                legsPosition: 0,
+                neckPosition: 0,
+            }
         );
-        setFilteredItems(filtered);
-    }, [items, creature.backpackItems, creature.equippedItems]);
+
+        const newEquippedSum = {
+            handPosition: currentEquippedSum.handPosition + (newItem.itemPosition.handPosition || 0),
+            fingerPosition: currentEquippedSum.fingerPosition + (newItem.itemPosition.fingerPosition || 0),
+            headPosition: currentEquippedSum.headPosition + (newItem.itemPosition.headPosition || 0),
+            bodyPosition: currentEquippedSum.bodyPosition + (newItem.itemPosition.bodyPosition || 0),
+            footPosition: currentEquippedSum.footPosition + (newItem.itemPosition.footPosition || 0),
+            cloakPosition: currentEquippedSum.cloakPosition + (newItem.itemPosition.cloakPosition || 0),
+            legsPosition: currentEquippedSum.legsPosition + (newItem.itemPosition.legsPosition || 0),
+            neckPosition: currentEquippedSum.neckPosition + (newItem.itemPosition.neckPosition || 0),
+        };
+
+        const maxItemPosition = creature.maxItemPosition;
+
+        if (newEquippedSum.handPosition > maxItemPosition.handPosition) {
+            return "Not enough hand position to equip this item.";
+        }
+        if (newEquippedSum.fingerPosition > maxItemPosition.fingerPosition) {
+            return "Not enough finger position to equip this item.";
+        }
+        if (newEquippedSum.headPosition > maxItemPosition.headPosition) {
+            return "Not enough head position to equip this item.";
+        }
+        if (newEquippedSum.bodyPosition > maxItemPosition.bodyPosition) {
+            return "Not enough body position to equip this item.";
+        }
+        if (newEquippedSum.footPosition > maxItemPosition.footPosition) {
+            return "Not enough foot position to equip this item.";
+        }
+        if (newEquippedSum.cloakPosition > maxItemPosition.cloakPosition) {
+            return "Not enough cloak position to equip this item.";
+        }
+        if (newEquippedSum.legsPosition > maxItemPosition.legsPosition) {
+            return "Not enough legs position to equip this item.";
+        }
+        if (newEquippedSum.neckPosition > maxItemPosition.neckPosition) {
+            return "Not enough neck position to equip this item.";
+        }
+
+        return null;
+    };
 
     return (
         <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto">
             <h1 className="text-2xl font-bold mb-4">Edit Creature</h1>
+            {errorMessage && (
+                <div className="text-red-500 bg-red-900 p-2 rounded mb-4">
+                    {errorMessage}
+                </div>
+            )}
 
             <Formik
                 initialValues={{
@@ -272,6 +352,14 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
                                     title="Backpack Items"
                                     items={values.backpackItems}
                                     onItemClick={(item) => {
+                                        // Проверяем, можно ли надеть предмет
+                                        const validationError = validateItemPositions(creature, values.equippedItems, item);
+                                        if (validationError) {
+                                            showError(validationError); // Показываем ошибку
+                                            return; // Запрещаем надевать предмет
+                                        }
+
+                                        // Если проверка прошла, добавляем предмет в equippedItems
                                         if (!values.equippedItems.some((i) => i.id === item.id)) {
                                             setFieldValue('equippedItems', [...values.equippedItems, item]);
                                             setFieldValue(

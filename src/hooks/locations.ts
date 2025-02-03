@@ -1,6 +1,6 @@
-import {IFullLocation, ILocation} from "../models";
 import {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
+import {IFullLocation} from "../interfaces/IFullLocation";
 
 interface useLocationProps {
     campaignId: string

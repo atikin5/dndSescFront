@@ -2,9 +2,9 @@ import React from 'react'
 import {useCampaigns} from "../hooks/campaigns";
 import {Loader} from "../components/references/Loader";
 import {ErrorMessage} from "../components/references/ErrorMessage";
-import {ICampaign} from "../models";
 import {Campaign} from "../components/tables/Campaign";
 import {CampaignTable} from "../components/tables/CampaignTable";
+import {ICampaign} from "../interfaces/ICampaign";
 
 export function CampaignsPage() {
     const page: number = 0

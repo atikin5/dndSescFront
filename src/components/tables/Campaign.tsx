@@ -1,7 +1,7 @@
 import React from 'react';
-import {ICampaign} from "../../models";
 import {Link} from "react-router-dom";
 import moment from "moment";
+import {ICampaign} from "../../interfaces/ICampaign";
 
 interface CampaignProps {
     campaign: ICampaign

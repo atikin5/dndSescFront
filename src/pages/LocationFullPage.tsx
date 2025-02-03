@@ -4,7 +4,6 @@ import {useDndCharacters} from "../hooks/dndCharacters";
 import React, {useContext} from "react";
 import {BasicTabs} from "../components/references/Tabs";
 import {CreatureTable} from "../components/tables/CreatureTable";
-import {ICharacter, ICreature} from "../models";
 import {Creature} from "../components/tables/Creature";
 import {DndCharacterTable} from "../components/tables/DndCharacterTable";
 import {DndCharacter} from "../components/tables/DndCharacter";
@@ -12,6 +11,8 @@ import {Loader} from "../components/references/Loader";
 import {ErrorMessage} from "../components/references/ErrorMessage";
 import {Modal} from "../components/references/Modal";
 import {ModalContext} from "../context/ModalContext";
+import {ICharacter} from "../interfaces/ICharacter";
+import {ICreature} from "../interfaces/ICreature";
 
 export function LocationFullPage() {
     const {locationId} = useParams()

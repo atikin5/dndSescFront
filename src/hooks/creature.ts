@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {ICharactersPage, ICreature} from "../models";
 import axios, {AxiosError, AxiosResponse} from "axios";
+import {ICreature} from "../interfaces/ICreature";
 
 interface useCreatureProps {
     creatureId: number

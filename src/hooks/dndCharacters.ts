@@ -1,6 +1,7 @@
-import {ICampaign, ICampaignsPage, ICharacter, ICharactersPage} from "../models";
 import {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosResponse} from "axios";
+import {ICharacter} from "../interfaces/ICharacter";
+import {ICharactersPage} from "../interfaces/ICharactersPage";
 
 interface useDndCharactersProps {
     campaignId: string

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
-import {ICampaign, ICampaignsPage} from "../models";
 import axios, {AxiosError, AxiosResponse} from 'axios'
+import {ICampaign} from "../interfaces/ICampaign";
+import {ICampaignsPage} from "../interfaces/ICampaignPage";
 
 interface useCampaignsProps {
     page: number

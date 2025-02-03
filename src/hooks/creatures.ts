@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
-import {ICharacter, ICharactersPage, ICreature, ICreaturesPage} from "../models";
 import axios, {AxiosError, AxiosResponse} from "axios";
+import {ICreature} from "../interfaces/ICreature";
+import {ICreaturesPage} from "../interfaces/ICreaturesPage";
 
 interface useCreaturesProps {
     campaignId: string | null

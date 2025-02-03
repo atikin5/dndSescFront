@@ -1,5 +1,5 @@
 import React, {createContext, useState} from "react";
-import {Editable} from "../enums";
+import {Editable} from "../enums/Editable";
 
 interface IModalContext {
     modal: boolean

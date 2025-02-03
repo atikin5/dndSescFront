@@ -1,0 +1,5 @@
+export enum DamageMultiplier {
+    RESISTANCE = "RESISTANCE",
+    IMMUNITY = "IMMUNITY",
+    VULNERABILITY = "VULNERABILITY"
+}

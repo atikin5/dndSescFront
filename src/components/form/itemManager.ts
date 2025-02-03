@@ -1,5 +1,5 @@
-import { IItem } from "../../models";
 import { canEquipItem } from "./canEqiuipItem";
+import {IItem} from "../../interfaces/IItem";
 
 export const addItemToBackpack = (backpackItems: IItem[], items: IItem[], item: IItem) => {
     return {
