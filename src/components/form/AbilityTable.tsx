@@ -1,6 +1,5 @@
 import React from 'react';
 import {IAbilities} from "../../base";
-import {validateNumber} from "./numberValidation";
 
 const AbilityTable = ({ abilities, onChange }: { abilities: IAbilities; onChange: (ability: string, value: number) => void }) => {
     const handleIncrement = (ability: string) => {
