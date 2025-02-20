@@ -27,7 +27,7 @@ const ItemList = ({
                 {items.length > 0 ? (
                     items.map((item) => (
                         <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1 rounded">
-                            <span>{item.name}</span>
+                            <span>{item.type}</span>
                             <div>
                                 <button
                                     onClick={() => onItemClick(item)}

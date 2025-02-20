@@ -6,7 +6,7 @@ interface IModalContext {
     modalType: Editable
     campaignId: number
     editedId: number
-    openModal: (modalType: Editable, editedId: number) => void
+    openModal: (modalType: Editable, editedId: number, campaignId: number) => void
     closeModal: () => void
 }
 
@@ -15,7 +15,7 @@ export const ModalContext = createContext<IModalContext>({
     modalType: undefined,
     campaignId: null,
     editedId: null,
-    openModal: (modalType: Editable, editedId: number) => {},
+    openModal: (modalType: Editable, editedId: number, campaignId: number) => {},
     closeModal: () => {}
 
 })
@@ -26,15 +26,17 @@ export const ModalState = ({ children }: {children: React.ReactNode}) => {
     const [editedId, setEditedId] = useState<number>(null)
     const [campaignId, setCampaignId] = useState<number>(null)
 
-    const openModal = (modalType: Editable, editedId: number) => {
+    const openModal = (modalType: Editable, editedId: number, campaignId: number) => {
         setModal(true)
         setModalType(modalType)
         setEditedId(editedId)
+        setCampaignId(campaignId)
     }
     const closeModal = () => {
         setModal(false)
         setModalType(undefined)
         setEditedId(null)
+        setCampaignId(null)
     }
 
     return (

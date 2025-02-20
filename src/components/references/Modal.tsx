@@ -10,6 +10,8 @@ interface ModalProps {
 
 export function Modal({modalTitle}: ModalProps) {
     const {closeModal, modalType, editedId, campaignId} = useContext(ModalContext)
+    console.log(campaignId);
+    console.log(editedId);
     return (
         <>
             {/*<div className="fixed bg-black/50 top-0 right-0 left-0 bottom-0" onClick={closeModal}/>*/}
@@ -20,4 +22,3 @@ export function Modal({modalTitle}: ModalProps) {
         </>
     )
 }
-//убрать alert

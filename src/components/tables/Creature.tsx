@@ -8,9 +8,10 @@ interface CreatureProps {
     location: boolean
     creature: ICreature
     key: number
+    campaignId: number
 }
 
-export function Creature({creature, location}: CreatureProps) {
+export function Creature({creature, location, campaignId}: CreatureProps) {
     const {openModal} = useContext(ModalContext)
 
     return (
@@ -26,7 +27,7 @@ export function Creature({creature, location}: CreatureProps) {
                 </td>
             }
             <td>
-                <button onClick={() => openModal(Editable.CREATURE, creature.id)}>Редактировать</button>
+                <button onClick={() => openModal(Editable.CREATURE, creature.id, campaignId)}>Редактировать</button>
             </td>
         </tr>)
 }

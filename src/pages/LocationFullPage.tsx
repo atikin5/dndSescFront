@@ -15,7 +15,8 @@ import {ICharacter} from "../interfaces/ICharacter";
 import {ICreature} from "../interfaces/ICreature";
 
 export function LocationFullPage() {
-    const {locationId} = useParams()
+    const {locationId, campaignId} = useParams()
+    const numCampaignId = Number(campaignId);
     const page: number = 0
     const size: number = 5
     const {creatures, creaturesError, creaturesLoading} = useCreatures({
@@ -47,6 +48,7 @@ export function LocationFullPage() {
                             creatures={creatures.map((creature: ICreature) =>
                                 <Creature
                                     creature={creature}
+                                    campaignId={numCampaignId}
                                     key={creature.id}
                                     location={false}/>)}
                             location={false}/>
@@ -62,6 +64,7 @@ export function LocationFullPage() {
                             dndCharacters={characters.map((character: ICharacter) =>
                                 <DndCharacter
                                     character={character}
+                                    campaignId={numCampaignId}
                                     key={character.id}
                                     location={false}/>)}
                             location={false}/>

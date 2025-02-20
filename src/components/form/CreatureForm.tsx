@@ -1,9 +1,8 @@
-import Select, { GroupBase } from "react-select"
+import Select, {GroupBase} from "react-select"
 import React from "react";
 import ItemList from "./ItemList";
 import ConditionSkillList from "./ConditionSkillList";
 import AbilityTable from "./AbilityTable";
-import {CreatureFormSchema} from "./CreatureFormSchema";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Size} from "../../enums/Size";
 import {Race} from "../../enums/Race";
@@ -12,6 +11,8 @@ import {ICreature} from "../../interfaces/ICreature";
 import {IItem} from "../../interfaces/IItem";
 import {ILocation} from "../../interfaces/ILocation";
 import {Condition} from "../../enums/Condition";
+import axios from "axios";
+import {validateData} from "./validateData";
 
 interface OptionType {
     value: string;
@@ -19,7 +20,11 @@ interface OptionType {
     id: number;
 }
 
-const CreatureForm = ({ creature, locations, items }: { creature: ICreature; locations: ILocation[]; items: IItem[] }) => {
+const CreatureForm = ({creature, locations, items}: {
+    creature: ICreature;
+    locations: ILocation[];
+    items: IItem[]
+}) => {
     const locationOptions: OptionType[] = locations.map((loc) => ({
         value: loc.name,
         label: loc.name,
@@ -107,6 +112,21 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
 
         return null;
     };
+    const saveCreature = async (values) => {
+        const data = validateData(values);
+        try {
+            const response = await axios({
+                method: "PUT",
+                url: `http://localhost:8080/creature/${creature.id}/update`,
+                data: data,
+            });
+
+            console.log("Server response:", response.data);
+        } catch (error) {
+            console.error("Error updating creature:", error);
+            showError("Failed to update creature. Please try again.");
+        }
+    };
 
     return (
         <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto">
@@ -120,8 +140,8 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
             <Formik
                 initialValues={{
                     operational: creature.operational,
-                    currentHp: creature.currentHp || 0 || '',
-                    maxHp: creature.maxHp || 0 || '',
+                    currentHp: creature.currentHp,
+                    maxHp: creature.maxHp,
                     temporaryHp: creature.temporaryHp || 0 || '',
                     armorClass: creature.armorClass || 0 || '',
                     abilities: creature.abilities,
@@ -131,24 +151,22 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
                     race: creature.race,
                     backpackItems: creature.backpackItems,
                     equippedItems: creature.equippedItems,
-                    items: items, // Изначально передаем все предметы
+                    items: items,
                 }}
-                validationSchema={CreatureFormSchema}
                 onSubmit={(values) => {
                     console.log('Updated Creature:', values);
                 }}
             >
-                {({ values, setFieldValue }) => {
-                    // Первоначальная фильтрация New Items
+                {({values, setFieldValue}) => {
 
 
                     return (
                         <Form>
                             {/* Error Message */}
-                            <ErrorMessage name="currentHp" component="div" className="text-red-500" />
-                            <ErrorMessage name="maxHp" component="div" className="text-red-500" />
-                            <ErrorMessage name="temporaryHp" component="div" className="text-red-500" />
-                            <ErrorMessage name="armorClass" component="div" className="text-red-500" />
+                            <ErrorMessage name="currentHp" component="div" className="text-red-500"/>
+                            <ErrorMessage name="maxHp" component="div" className="text-red-500"/>
+                            <ErrorMessage name="temporaryHp" component="div" className="text-red-500"/>
+                            <ErrorMessage name="armorClass" component="div" className="text-red-500"/>
 
                             {/* Location Dropdown */}
                             <div className="mb-4">
@@ -162,14 +180,18 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
                                         }
                                     }}
                                     styles={{
-                                        control: (base) => ({ ...base, backgroundColor: '#1f2937', borderColor: 'yellow' }),
-                                        menu: (base) => ({ ...base, backgroundColor: '#1f2937', color: 'yellow' }),
+                                        control: (base) => ({
+                                            ...base,
+                                            backgroundColor: '#1f2937',
+                                            borderColor: 'yellow'
+                                        }),
+                                        menu: (base) => ({...base, backgroundColor: '#1f2937', color: 'yellow'}),
                                         option: (base, state) => ({
                                             ...base,
                                             backgroundColor: state.isSelected ? 'yellow' : '#1f2937',
                                             color: state.isSelected ? 'black' : 'yellow',
                                         }),
-                                        singleValue: (base) => ({ ...base, color: 'yellow' }),
+                                        singleValue: (base) => ({...base, color: 'yellow'}),
                                     }}
                                     components={{
                                         IndicatorSeparator: () => null,
@@ -185,33 +207,24 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
                                         type="text"
                                         name="currentHp"
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
-                                        onKeyPress={(e) => {
-                                            if (!/[0-9]/.test(e.key)) {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                        onBlur={() => {
-                                            if (values.currentHp === null || values.currentHp === '') {
-                                                setFieldValue('currentHp', 0);
-                                            }
-                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <label className="block mb-1">Max HP</label>
-                                    <Field
+                                    <input
                                         type="text"
                                         name="maxHp"
+                                        value={values.maxHp}
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
-                                        onKeyPress={(e) => {
-                                            if (!/[0-9]/.test(e.key)) {
-                                                e.preventDefault();
+                                        onChange={(e) => {
+                                            const rawValue = e.target.value;
+                                            if (/^\d*$/.test(rawValue)) {
+                                                setFieldValue('maxHp', rawValue === '' ? 0 : parseInt(rawValue, 10));
                                             }
                                         }}
-                                        onBlur={() => {
-                                            if (values.maxHp === null || values.maxHp === '') {
-                                                setFieldValue('maxHp', 0);
-                                            }
+                                        onBlur={(e) => {
+                                            const value = Math.max(0, parseInt(e.target.value, 10));
+                                            setFieldValue('maxHp', value);
                                         }}
                                     />
                                 </div>
@@ -408,8 +421,11 @@ const CreatureForm = ({ creature, locations, items }: { creature: ICreature; loc
 
                             {/* Save Button */}
                             <button
-                                type="submit"
+                                type="button"
                                 className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-500"
+                                onClick={() => {
+                                    saveCreature(values);
+                                }}
                             >
                                 Save
                             </button>

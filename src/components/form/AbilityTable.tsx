@@ -31,7 +31,7 @@ const AbilityTable = ({ abilities, onChange }: { abilities: IAbilities; onChange
                                 onChange={(e) => {
                                     const rawValue = e.target.value;
                                     if (/^\d*$/.test(rawValue)) {
-                                        onChange(ability, rawValue === '' ? null : parseInt(rawValue, 10));
+                                        onChange(ability, rawValue === '' ? 0 : parseInt(rawValue, 10));
                                     }
                                 }}
                                 onBlur={(e) => {

@@ -8,7 +8,7 @@ import {Creature} from "../components/tables/Creature";
 import {useDndCharacters} from "../hooks/dndCharacters";
 import {DndCharacter} from "../components/tables/DndCharacter";
 import {LocationTable} from "../components/tables/LocationTable";
-import {useLocations} from "../hooks/locations";
+import {useLocationsPage} from "../hooks/locationsPage";
 import {DndLocation} from "../components/tables/Location";
 import {Loader} from "../components/references/Loader";
 import {ErrorMessage} from "../components/references/ErrorMessage";
@@ -21,12 +21,13 @@ import {ICharacter} from "../interfaces/ICharacter";
 
 export function CampaignFullPage() {
     const {campaignId} = useParams();
+    const numCampaignId = Number(campaignId);
     const page: number = 0
     const size: number = 5
 
     const {modal, openModal, closeModal} = useContext(ModalContext)
 
-    const {locations, locationsError, locationsLoading} = useLocations({
+    const {locations, locationsError, locationsLoading} = useLocationsPage({
         page: page,
         size: size,
         campaignId: campaignId
@@ -73,6 +74,7 @@ export function CampaignFullPage() {
                             creatures={creatures.map((creature: ICreature) =>
                                 <Creature
                                     creature={creature}
+                                    campaignId={numCampaignId}
                                     key={creature.id}
                                     location={true}/>)}
                             location={true}/>
@@ -88,6 +90,7 @@ export function CampaignFullPage() {
                             dndCharacters={characters.map((character: ICharacter) =>
                                 <DndCharacter
                                     character={character}
+                                    campaignId={numCampaignId}
                                     key={character.id}
                                     location={true}/>)}
                             location={true}/>

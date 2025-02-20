@@ -8,9 +8,10 @@ interface CharacterProps {
     location: boolean
     character: ICharacter
     key: number
+    campaignId: number
 }
 
-export function DndCharacter({character, location}: CharacterProps) {
+export function DndCharacter({character, location, campaignId}: CharacterProps) {
     const {openModal} = useContext(ModalContext)
     return (
         <tr>
@@ -25,7 +26,7 @@ export function DndCharacter({character, location}: CharacterProps) {
                 </td>
             }
             <td>
-                <button onClick={() => openModal(Editable.DND_CHARACTER, character.id)}>Редактировать</button>
+                <button onClick={() => openModal(Editable.DND_CHARACTER, character.id, campaignId)}>Редактировать</button>
             </td>
         </tr>)
 }
