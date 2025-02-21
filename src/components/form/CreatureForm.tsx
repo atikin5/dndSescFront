@@ -23,7 +23,7 @@ interface OptionType {
 const CreatureForm = ({creature, locations, items}: {
     creature: ICreature;
     locations: ILocation[];
-    items: IItem[]
+    items: IItem[] | [];
 }) => {
     const locationOptions: OptionType[] = locations.map((loc) => ({
         value: loc.name,
@@ -42,72 +42,64 @@ const CreatureForm = ({creature, locations, items}: {
         }, 2000);
     };
 
-    // Функция проверки itemPosition
+    const customStyles = {
+        control: (base: any) => ({
+            ...base,
+            backgroundColor: '#1f2937',
+            borderColor: 'yellow',
+        }),
+        menu: (base: any) => ({
+            ...base,
+            backgroundColor: '#1f2937',
+            color: 'yellow',
+        }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isSelected ? 'yellow' : '#1f2937',
+            color: state.isSelected ? 'black' : 'yellow',
+        }),
+        singleValue: (base: any) => ({
+            ...base,
+            color: 'yellow',
+        }),
+    };
+
     const validateItemPositions = (
         creature: ICreature,
         equippedItems: IItem[],
         newItem: IItem
     ): string | null => {
+        const positions = [
+            'handPosition',
+            'fingerPosition',
+            'headPosition',
+            'bodyPosition',
+            'footPosition',
+            'cloakPosition',
+            'legsPosition',
+            'neckPosition',
+        ];
+
         const currentEquippedSum = equippedItems.reduce(
             (acc, item) => {
-                acc.handPosition += item.itemPosition.handPosition || 0;
-                acc.fingerPosition += item.itemPosition.fingerPosition || 0;
-                acc.headPosition += item.itemPosition.headPosition || 0;
-                acc.bodyPosition += item.itemPosition.bodyPosition || 0;
-                acc.footPosition += item.itemPosition.footPosition || 0;
-                acc.cloakPosition += item.itemPosition.cloakPosition || 0;
-                acc.legsPosition += item.itemPosition.legsPosition || 0;
-                acc.neckPosition += item.itemPosition.neckPosition || 0;
+                positions.forEach((pos) => {
+                    acc[pos] += item.itemPosition[pos] || 0;
+                });
                 return acc;
             },
-            {
-                handPosition: 0,
-                fingerPosition: 0,
-                headPosition: 0,
-                bodyPosition: 0,
-                footPosition: 0,
-                cloakPosition: 0,
-                legsPosition: 0,
-                neckPosition: 0,
-            }
+            positions.reduce((acc, pos) => ({ ...acc, [pos]: 0 }), {})
         );
 
-        const newEquippedSum = {
-            handPosition: currentEquippedSum.handPosition + (newItem.itemPosition.handPosition || 0),
-            fingerPosition: currentEquippedSum.fingerPosition + (newItem.itemPosition.fingerPosition || 0),
-            headPosition: currentEquippedSum.headPosition + (newItem.itemPosition.headPosition || 0),
-            bodyPosition: currentEquippedSum.bodyPosition + (newItem.itemPosition.bodyPosition || 0),
-            footPosition: currentEquippedSum.footPosition + (newItem.itemPosition.footPosition || 0),
-            cloakPosition: currentEquippedSum.cloakPosition + (newItem.itemPosition.cloakPosition || 0),
-            legsPosition: currentEquippedSum.legsPosition + (newItem.itemPosition.legsPosition || 0),
-            neckPosition: currentEquippedSum.neckPosition + (newItem.itemPosition.neckPosition || 0),
-        };
+        const newEquippedSum = positions.reduce((acc, pos) => {
+            acc[pos] = currentEquippedSum[pos] + (newItem.itemPosition[pos] || 0);
+            return acc;
+        }, {});
 
-        const maxItemPosition = creature.maxItemPosition;
-
-        if (newEquippedSum.handPosition > maxItemPosition.handPosition) {
-            return "Not enough hand position to equip this item.";
-        }
-        if (newEquippedSum.fingerPosition > maxItemPosition.fingerPosition) {
-            return "Not enough finger position to equip this item.";
-        }
-        if (newEquippedSum.headPosition > maxItemPosition.headPosition) {
-            return "Not enough head position to equip this item.";
-        }
-        if (newEquippedSum.bodyPosition > maxItemPosition.bodyPosition) {
-            return "Not enough body position to equip this item.";
-        }
-        if (newEquippedSum.footPosition > maxItemPosition.footPosition) {
-            return "Not enough foot position to equip this item.";
-        }
-        if (newEquippedSum.cloakPosition > maxItemPosition.cloakPosition) {
-            return "Not enough cloak position to equip this item.";
-        }
-        if (newEquippedSum.legsPosition > maxItemPosition.legsPosition) {
-            return "Not enough legs position to equip this item.";
-        }
-        if (newEquippedSum.neckPosition > maxItemPosition.neckPosition) {
-            return "Not enough neck position to equip this item.";
+        for (const pos of positions) {
+            if (newEquippedSum[pos] > creature.maxItemPosition[pos]) {
+                const part = pos.replace('Position', '');
+                return `Not enough ${part} position to equip this item.`;
+            }
         }
 
         return null;
@@ -128,6 +120,26 @@ const CreatureForm = ({creature, locations, items}: {
         }
     };
 
+    const handleNumberInput = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        fieldName: string,
+        setFieldValue: (field: string, value: any) => void
+    ) => {
+        const rawValue = e.target.value;
+        if (/^\d*$/.test(rawValue)) {
+            setFieldValue(fieldName, rawValue === '' ? 0 : parseInt(rawValue, 10));
+        }
+    };
+
+    const handleBlur = (
+        e: React.FocusEvent<HTMLInputElement>,
+        fieldName: string,
+        setFieldValue: (field: string, value: any) => void
+    ) => {
+        const value = Math.max(0, parseInt(e.target.value, 10));
+        setFieldValue(fieldName, value);
+    };
+
     return (
         <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto">
             <h1 className="text-2xl font-bold mb-4">Edit Creature</h1>
@@ -142,8 +154,8 @@ const CreatureForm = ({creature, locations, items}: {
                     operational: creature.operational,
                     currentHp: creature.currentHp,
                     maxHp: creature.maxHp,
-                    temporaryHp: creature.temporaryHp || 0 || '',
-                    armorClass: creature.armorClass || 0 || '',
+                    temporaryHp: creature.temporaryHp,
+                    armorClass: creature.armorClass,
                     abilities: creature.abilities,
                     condition: creature.condition || [],
                     skills: creature.skills || [],
@@ -151,7 +163,8 @@ const CreatureForm = ({creature, locations, items}: {
                     race: creature.race,
                     backpackItems: creature.backpackItems,
                     equippedItems: creature.equippedItems,
-                    items: items,
+                    locationId: creature.locationId,
+                    items: items || [],
                 }}
                 onSubmit={(values) => {
                     console.log('Updated Creature:', values);
@@ -162,13 +175,6 @@ const CreatureForm = ({creature, locations, items}: {
 
                     return (
                         <Form>
-                            {/* Error Message */}
-                            <ErrorMessage name="currentHp" component="div" className="text-red-500"/>
-                            <ErrorMessage name="maxHp" component="div" className="text-red-500"/>
-                            <ErrorMessage name="temporaryHp" component="div" className="text-red-500"/>
-                            <ErrorMessage name="armorClass" component="div" className="text-red-500"/>
-
-                            {/* Location Dropdown */}
                             <div className="mb-4">
                                 <label className="block mb-2 text-yellow-400">Location</label>
                                 <Select<OptionType, false, GroupBase<OptionType>>
@@ -179,27 +185,13 @@ const CreatureForm = ({creature, locations, items}: {
                                             setFieldValue('locationId', selectedOption.id);
                                         }
                                     }}
-                                    styles={{
-                                        control: (base) => ({
-                                            ...base,
-                                            backgroundColor: '#1f2937',
-                                            borderColor: 'yellow'
-                                        }),
-                                        menu: (base) => ({...base, backgroundColor: '#1f2937', color: 'yellow'}),
-                                        option: (base, state) => ({
-                                            ...base,
-                                            backgroundColor: state.isSelected ? 'yellow' : '#1f2937',
-                                            color: state.isSelected ? 'black' : 'yellow',
-                                        }),
-                                        singleValue: (base) => ({...base, color: 'yellow'}),
-                                    }}
+                                    styles={customStyles}
                                     components={{
                                         IndicatorSeparator: () => null,
                                     }}
                                 />
                             </div>
 
-                            {/* Numerical Fields */}
                             <div className="flex gap-4 mb-4 bg-gray-800 p-2 rounded-lg">
                                 <div className="flex flex-col items-center">
                                     <label className="block mb-1">Current HP</label>
@@ -207,25 +199,28 @@ const CreatureForm = ({creature, locations, items}: {
                                         type="text"
                                         name="currentHp"
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
+                                        value={values.currentHp}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                            handleNumberInput(e, 'currentHp', setFieldValue)
+                                        }
+                                        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                                            handleBlur(e, 'currentHp', setFieldValue)
+                                        }
                                     />
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <label className="block mb-1">Max HP</label>
-                                    <input
+                                    <Field
                                         type="text"
                                         name="maxHp"
-                                        value={values.maxHp}
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
-                                        onChange={(e) => {
-                                            const rawValue = e.target.value;
-                                            if (/^\d*$/.test(rawValue)) {
-                                                setFieldValue('maxHp', rawValue === '' ? 0 : parseInt(rawValue, 10));
-                                            }
-                                        }}
-                                        onBlur={(e) => {
-                                            const value = Math.max(0, parseInt(e.target.value, 10));
-                                            setFieldValue('maxHp', value);
-                                        }}
+                                        value={values.maxHp}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                            handleNumberInput(e, 'maxHp', setFieldValue)
+                                        }
+                                        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                                            handleBlur(e, 'maxHp', setFieldValue)
+                                        }
                                     />
                                 </div>
                                 <div className="flex flex-col items-center">
@@ -234,16 +229,13 @@ const CreatureForm = ({creature, locations, items}: {
                                         type="text"
                                         name="temporaryHp"
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
-                                        onKeyPress={(e) => {
-                                            if (!/[0-9]/.test(e.key)) {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                        onBlur={() => {
-                                            if (values.temporaryHp === null || values.temporaryHp === '') {
-                                                setFieldValue('temporaryHp', 0);
-                                            }
-                                        }}
+                                        value={values.temporaryHp}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                            handleNumberInput(e, 'temporaryHp', setFieldValue)
+                                        }
+                                        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                                            handleBlur(e, 'temporaryHp', setFieldValue)
+                                        }
                                     />
                                 </div>
                                 <div className="flex flex-col items-center">
@@ -252,21 +244,16 @@ const CreatureForm = ({creature, locations, items}: {
                                         type="text"
                                         name="armorClass"
                                         className="w-20 text-center bg-gray-700 text-yellow-400 border border-yellow-400 px-2 py-1"
-                                        onKeyPress={(e) => {
-                                            if (!/[0-9]/.test(e.key)) {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                        onBlur={() => {
-                                            if (values.armorClass === null || values.armorClass === '') {
-                                                setFieldValue('armorClass', 0);
-                                            }
-                                        }}
+                                        value={values.armorClass}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                            handleNumberInput(e, 'armorClass', setFieldValue)
+                                        }
+                                        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                                            handleBlur(e, 'armorClass', setFieldValue)
+                                        }
                                     />
                                 </div>
                             </div>
-
-                            {/* Size and Race */}
                             <div className="flex gap-4 mb-4 bg-gray-800 p-2 rounded-lg">
                                 <div className="flex flex-col items-center flex-1">
                                     <label className="block mb-1">Size</label>
@@ -298,9 +285,7 @@ const CreatureForm = ({creature, locations, items}: {
                                 </div>
                             </div>
 
-                            {/* Abilities, Conditions, and Skills */}
                             <div className="flex gap-4 mb-4">
-                                {/* Abilities */}
                                 <AbilityTable
                                     abilities={values.abilities}
                                     onChange={(ability, value) => {
@@ -308,7 +293,6 @@ const CreatureForm = ({creature, locations, items}: {
                                     }}
                                 />
 
-                                {/* Conditions and Skills */}
                                 <div className="flex-1 flex gap-4">
                                     <ConditionSkillList
                                         title="Conditions"
@@ -341,18 +325,16 @@ const CreatureForm = ({creature, locations, items}: {
                                 </div>
                             </div>
 
-                            {/* Items */}
                             <div className="flex gap-4 mb-4">
-                                {/* New Items */}
                                 <ItemList
                                     title="New Items"
-                                    items={values.items} // Используем отфильтрованный список
+                                    items={values.items}
                                     onItemClick={(item) => {
                                         if (!values.backpackItems.some((i) => i.id === item.id)) {
                                             setFieldValue('backpackItems', [...values.backpackItems, item]);
                                             setFieldValue(
                                                 'items',
-                                                values.items.filter((i) => i.id !== item.id) // Удаляем предмет из New Items
+                                                values.items.filter((i) => i.id !== item.id)
                                             );
                                         }
                                     }}
@@ -360,19 +342,15 @@ const CreatureForm = ({creature, locations, items}: {
                                     containerStyle="bg-gray-800"
                                 />
 
-                                {/* Backpack Items */}
                                 <ItemList
                                     title="Backpack Items"
                                     items={values.backpackItems}
                                     onItemClick={(item) => {
-                                        // Проверяем, можно ли надеть предмет
                                         const validationError = validateItemPositions(creature, values.equippedItems, item);
                                         if (validationError) {
-                                            showError(validationError); // Показываем ошибку
-                                            return; // Запрещаем надевать предмет
+                                            showError(validationError);
+                                            return
                                         }
-
-                                        // Если проверка прошла, добавляем предмет в equippedItems
                                         if (!values.equippedItems.some((i) => i.id === item.id)) {
                                             setFieldValue('equippedItems', [...values.equippedItems, item]);
                                             setFieldValue(
@@ -390,10 +368,9 @@ const CreatureForm = ({creature, locations, items}: {
                                     }}
                                     buttonText="Equip"
                                     showDrop
-                                    containerStyle="bg-gray-700"
+                                    containerStyle="bg-gray-800"
                                 />
 
-                                {/* Equipped Items */}
                                 <ItemList
                                     title="Equipped Items"
                                     items={values.equippedItems}
@@ -415,11 +392,10 @@ const CreatureForm = ({creature, locations, items}: {
                                     }}
                                     buttonText="Unequip"
                                     showDrop
-                                    containerStyle="bg-gray-900"
+                                    containerStyle="bg-gray-800"
                                 />
                             </div>
 
-                            {/* Save Button */}
                             <button
                                 type="button"
                                 className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-500"

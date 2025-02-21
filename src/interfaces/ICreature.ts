@@ -21,7 +21,7 @@ export interface IRequestCreature {
     skills: Skill[],
     size: Size,
     race: Race,
-    backpackItems: number[],
-    equippedItems: number[],
+    backpackItemIds: number[],
+    equippedItemIds: number[],
     locationId: number,
 }

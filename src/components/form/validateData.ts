@@ -34,12 +34,12 @@ export function validateData(values: validateDataProps) {
         skills: values.skills,
         size: values.size,
         race: values.race,
-        backpackItems: [],
-        equippedItems: [],
+        backpackItemIds: [],
+        equippedItemIds: [],
         locationId: values.locationId,
     }
-    values.backpackItems.map(value => data.backpackItems.push(value.id));
-    values.equippedItems.map(value => data.equippedItems.push(value.id));
+    values.backpackItems.map(value => data.backpackItemIds.push(value.id));
+    values.equippedItems.map(value => data.equippedItemIds.push(value.id));
     if (typeof values.currentHp === "number") {
         data.currentHp = values.currentHp;
     }
