@@ -1,8 +1,6 @@
 import React from 'react';
 import {IItem} from "../../interfaces/IItem";
 
-
-
 const ItemList = ({
                       title,
                       items,
@@ -10,7 +8,7 @@ const ItemList = ({
                       onDrop,
                       buttonText,
                       showDrop = false,
-                      containerStyle = "bg-gray-800", // Дефолтный стиль
+                      containerStyle = "bg-gray-800",
                   }: {
     title: string;
     items: IItem[];
@@ -18,15 +16,16 @@ const ItemList = ({
     onDrop?: (item: IItem) => void;
     buttonText: string;
     showDrop?: boolean;
-    containerStyle?: string; // Стиль контейнера
+    containerStyle?: string;
 }) => {
     return (
         <div className={`flex-1 ${containerStyle} rounded-lg p-2`}>
             <h3 className="font-bold text-center mb-2">{title}</h3>
-            <ul className="max-h-40 overflow-y-auto" style={{ scrollbarColor: 'yellow black' }}>
+            <ul className="max-h-40 overflow-y-auto" style={{scrollbarColor: 'yellow black'}}>
                 {items.length > 0 ? (
                     items.map((item) => (
-                        <li key={item.id} className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1 rounded">
+                        <li key={item.id}
+                            className="flex justify-between items-center bg-gray-800 text-yellow-400 p-1 rounded">
                             <span>{item.type}</span>
                             <div>
                                 <button

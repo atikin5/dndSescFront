@@ -3,7 +3,7 @@ import React from "react";
 import ItemList from "./ItemList";
 import ConditionSkillList from "./ConditionSkillList";
 import AbilityTable from "./AbilityTable";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Field, Form, Formik} from "formik";
 import {Size} from "../../enums/Size";
 import {Race} from "../../enums/Race";
 import {Skill} from "../../enums/Skill";
@@ -157,7 +157,7 @@ const CreatureForm = ({creature, locations, items}: {
                     temporaryHp: creature.temporaryHp,
                     armorClass: creature.armorClass,
                     abilities: creature.abilities,
-                    condition: creature.condition || [],
+                    conditions: creature.conditions || [],
                     skills: creature.skills || [],
                     size: creature.size,
                     race: creature.race,
@@ -297,14 +297,14 @@ const CreatureForm = ({creature, locations, items}: {
                                     <ConditionSkillList
                                         title="Conditions"
                                         allItems={Object.values(Condition)}
-                                        selectedItems={values.condition}
+                                        selectedItems={values.conditions}
                                         onAdd={(item) => {
-                                            setFieldValue('condition', [...values.condition, item]);
+                                            setFieldValue('conditions', [...values.conditions, item]);
                                         }}
                                         onRemove={(item) => {
                                             setFieldValue(
-                                                'condition',
-                                                values.condition.filter((i) => i !== item)
+                                                'conditions',
+                                                values.conditions.filter((i) => i !== item)
                                             );
                                         }}
                                     />

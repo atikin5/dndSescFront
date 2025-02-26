@@ -12,5 +12,5 @@ export interface IDestructible extends ICampaignObject {
     armorClass: number;
     damageMultipliers: Map<DamageType, DamageMultiplier>
     size: Size;
-    condition: Condition[];
+    conditions: Condition[];
 }
