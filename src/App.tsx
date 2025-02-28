@@ -11,7 +11,8 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<CampaignsPage/>}/>
                 <Route path="/campaign/:campaignId" element={<CampaignFullPage/>}/>
-                <Route path="/location/:locationId" element={<LocationFullPage/>}/>
+                <Route path="/campaign/:campaignId/location/:locationId" element={<LocationFullPage/>}/>
+                <Route path="/campaign/:campaignId/open-location/:locationId" element={<></>}/>
             </Routes>
         </ModalState>)
 }

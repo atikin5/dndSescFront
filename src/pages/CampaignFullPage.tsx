@@ -61,6 +61,7 @@ export function CampaignFullPage() {
                             locations={locations.map((location: IFullLocation) =>
                                 <DndLocation
                                     location={location}
+                                    campaignId={numCampaignId}
                                     key={location.id}/>)}/>
                     }
                 </>,

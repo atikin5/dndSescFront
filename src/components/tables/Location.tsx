@@ -3,11 +3,12 @@ import {Link} from "react-router-dom";
 import {IFullLocation} from "../../interfaces/IFullLocation";
 
 interface LocationProps {
+    campaignId: number
     location: IFullLocation
     key: number
 }
 
-export function DndLocation({location}: LocationProps) {
+export function DndLocation({location, campaignId}: LocationProps) {
     return (
         <tr>
             <td>{location.name}</td>
@@ -18,7 +19,7 @@ export function DndLocation({location}: LocationProps) {
             <td>{location.walls.length}</td>
             <td>{location.doors.length}</td>
             <td>
-                <Link to={`/location/${location.id}`}>Открыть</Link>
+                <Link to={`/campaign/${campaignId}/location/${location.id}`}>Открыть</Link>
             </td>
         </tr>
     )

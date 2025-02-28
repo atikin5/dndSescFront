@@ -22,7 +22,7 @@ export function DndCharacter({character, location, campaignId}: CharacterProps) 
                 location &&
                 <td>
                     {character.locationId != undefined &&
-                        <Link to={`/location/${character.locationId}`}>{character.locationName}</Link>}
+                        <Link to={`/campaign/${campaignId}location/${character.locationId}`}>{character.locationName}</Link>}
                 </td>
             }
             <td>

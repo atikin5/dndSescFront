@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useCreatures} from "../hooks/creatures";
 import {useDndCharacters} from "../hooks/dndCharacters";
 import React, {useContext} from "react";
@@ -39,6 +39,11 @@ export function LocationFullPage() {
         <div className="select-none">
             <BasicTabs name="location" tabsBody={[
                 <>
+                    <div>
+                        <Link to={`/campaign/${campaignId}/open-location/${locationId}`}>Перейти</Link>
+                    </div>
+                </>,
+                <>
                     {creaturesLoading && <Loader/>}
                     {creaturesError && <ErrorMessage error={creaturesError}/>}
                     {
@@ -71,7 +76,7 @@ export function LocationFullPage() {
                     }
                 </>,
             ]}
-                       tabsHead={["creatures", "characters"]}
+                       tabsHead={["start", "creatures", "characters"]}
             />
             {modal && <Modal modalTitle={""}/>}
         </div>)

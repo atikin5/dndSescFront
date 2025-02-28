@@ -23,7 +23,7 @@ export function Creature({creature, location, campaignId}: CreatureProps) {
                 location &&
                 <td>
                     {creature.locationId != undefined &&
-                        <Link to={`/location/${creature.locationId}`}>{creature.locationName}</Link>}
+                        <Link to={`/campaign/${campaignId}/location/${creature.locationId}`}>{creature.locationName}</Link>}
                 </td>
             }
             <td>
