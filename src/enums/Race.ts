@@ -8,5 +8,6 @@ export enum Race {
     HALFLING = "HALFLING",
     HUMAN = "HUMAN",
     ORC = "ORC",
-    TIEFLING = "TIEFLING"
+    TIEFLING = "TIEFLING",
+    BEAST = "BEAST"
 }

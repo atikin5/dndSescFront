@@ -32,7 +32,7 @@ export function CreatureModal({campaignId, creatureId}: CreatureModalProps) {
     const fetchLocations = async () => {
         const response: AxiosResponse = await axios({
             method: "GET",
-            baseURL: `http://localhost:8080/location/campaign/1`,
+            baseURL: `http://localhost:8080/location/campaign/${campaignId}`,
         })
         return response.data;
     }
@@ -54,8 +54,9 @@ export function CreatureModal({campaignId, creatureId}: CreatureModalProps) {
     const fetchCreature = async () => {
         const response: AxiosResponse = await axios({
             method: "GET",
-            baseURL: `http://localhost:8080/creature/102`
+            baseURL: `http://localhost:8080/creature/${creatureId}`,
         })
+        console.log(creatureId);
         return response.data;
     };
 

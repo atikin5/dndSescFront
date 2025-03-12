@@ -1,5 +1,5 @@
 import Select, {GroupBase} from "react-select"
-import React from "react";
+import React, {useContext} from "react";
 import ItemList from "./ItemList";
 import ConditionSkillList from "./ConditionSkillList";
 import AbilityTable from "./AbilityTable";
@@ -13,6 +13,7 @@ import {ILocation} from "../../interfaces/ILocation";
 import {Condition} from "../../enums/Condition";
 import axios from "axios";
 import {validateData} from "./validateData";
+import {ModalContext} from "../../context/ModalContext";
 
 interface OptionType {
     value: string;
@@ -30,6 +31,8 @@ const CreatureForm = ({creature, locations, items}: {
         label: loc.name,
         id: loc.id,
     }));
+
+    const {closeModal} = useContext(ModalContext);
 
     // Состояние для ошибки
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -141,7 +144,7 @@ const CreatureForm = ({creature, locations, items}: {
     };
 
     return (
-        <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto">
+        <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto ">
             <h1 className="text-2xl font-bold mb-4">Edit Creature</h1>
             {errorMessage && (
                 <div className="text-red-500 bg-red-900 p-2 rounded mb-4">
@@ -151,6 +154,7 @@ const CreatureForm = ({creature, locations, items}: {
 
             <Formik
                 initialValues={{
+                    type: creature.type,
                     operational: creature.operational,
                     currentHp: creature.currentHp,
                     maxHp: creature.maxHp,
@@ -398,12 +402,22 @@ const CreatureForm = ({creature, locations, items}: {
 
                             <button
                                 type="button"
-                                className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-500"
+                                className="mt-4 bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-500 mr-2"
                                 onClick={() => {
                                     saveCreature(values);
+                                    closeModal();
                                 }}
                             >
                                 Save
+                            </button>
+                            <button
+                                type="button"
+                                className="mt-4 bg-red-500 text-black px-4 py-2 rounded hover:bg-red-600"
+                                onClick={() => {
+                                    closeModal();
+                                }}
+                            >
+                                Close
                             </button>
                         </Form>
                     );
