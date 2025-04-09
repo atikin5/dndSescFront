@@ -36,7 +36,7 @@ export function LocationFullPage() {
     const {modal, modalType} = useContext(ModalContext)
 
     return (
-        <div className="select-none">
+        <div className="select-none z-0">
             <BasicTabs name="location" tabsBody={[
                 <>
                     <div>

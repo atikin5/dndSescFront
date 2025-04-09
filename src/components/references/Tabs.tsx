@@ -64,13 +64,15 @@ export function BasicTabs({tabsBody, tabsHead, name}: BasicTabsProps) {
     }
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label={name}>
-                    {ConstructTabsHeader()}
-                </Tabs>
+        <div className="z-0 absolute">
+            <Box sx={{width: '100%'}}>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs value={value} onChange={handleChange} aria-label={name}>
+                        {ConstructTabsHeader()}
+                    </Tabs>
+                </Box>
+                {ConstructTabsContent()}
             </Box>
-            {ConstructTabsContent()}
-        </Box>
+        </div>
     )
 }

@@ -18,14 +18,13 @@ import {IFullLocation} from "../interfaces/IFullLocation";
 import {ICreature} from "../interfaces/ICreature";
 import {ICharacter} from "../interfaces/ICharacter";
 
-
 export function CampaignFullPage() {
     const {campaignId} = useParams();
     const numCampaignId = Number(campaignId);
     const page: number = 0
     const size: number = 5
 
-    const {modal, openModal, closeModal} = useContext(ModalContext)
+    const {modal} = useContext(ModalContext)
 
     const {locations, locationsError, locationsLoading} = useLocationsPage({
         page: page,
@@ -49,7 +48,7 @@ export function CampaignFullPage() {
 
 
     return (
-        <div className="select-none">
+        <div className="select-none relative">
             <BasicTabs name="campaign" tabsBody={[
                 <>
                     {locationsLoading && <Loader/>}

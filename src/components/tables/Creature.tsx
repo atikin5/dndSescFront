@@ -13,7 +13,7 @@ interface CreatureProps {
 
 export function Creature({creature, location, campaignId}: CreatureProps) {
     const {openModal} = useContext(ModalContext)
-
+    console.log(creature.locationName)
     return (
         <tr>
             <td>{creature.type}</td>
