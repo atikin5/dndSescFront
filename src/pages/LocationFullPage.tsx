@@ -1,5 +1,5 @@
 import {Link, useParams} from "react-router-dom";
-import {useCreatures} from "../hooks/creatures";
+import {useCreaturesPage} from "../hooks/creaturesPage";
 import {useDndCharacters} from "../hooks/dndCharacters";
 import React, {useContext} from "react";
 import {BasicTabs} from "../components/references/Tabs";
@@ -19,7 +19,7 @@ export function LocationFullPage() {
     const numCampaignId = Number(campaignId);
     const page: number = 0
     const size: number = 5
-    const {creatures, creaturesError, creaturesLoading} = useCreatures({
+    const {creatures, creaturesError, creaturesLoading} = useCreaturesPage({
         page: page,
         size: size,
         campaignId: null,
@@ -75,8 +75,11 @@ export function LocationFullPage() {
                             location={false}/>
                     }
                 </>,
+                <Link to={`/campaign/${campaignId}/open-location/${locationId}`} >
+                    Открыть карту
+                </Link>
             ]}
-                       tabsHead={["start", "creatures", "characters"]}
+                       tabsHead={["start", "creatures", "characters", "open map"]}
             />
             {modal && <Modal modalTitle={""}/>}
         </div>)

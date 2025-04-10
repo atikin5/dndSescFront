@@ -1,0 +1,5 @@
+export enum ModalTypeEnum {
+    DND_CHARACTER = "DND_CHARACTER",
+    CREATURE = "CREATURE",
+    CREATURE_ON_MAP = "CREATURE_ON_MAP",
+}

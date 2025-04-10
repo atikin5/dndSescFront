@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import {ModalContext} from "../../context/ModalContext";
-import {Editable} from "../../enums/Editable";
+import {ModalTypeEnum} from "../../enums/ModalTypeEnum";
 import {ICreature} from "../../interfaces/ICreature";
 
 interface CreatureProps {
@@ -27,7 +27,7 @@ export function Creature({creature, location, campaignId}: CreatureProps) {
                 </td>
             }
             <td>
-                <button onClick={() => openModal(Editable.CREATURE, creature.id, campaignId)}>Редактировать</button>
+                <button onClick={() => openModal(ModalTypeEnum.CREATURE, creature.id, campaignId)}>Редактировать</button>
             </td>
         </tr>)
 }

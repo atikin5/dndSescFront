@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {BasicTabs} from "../components/references/Tabs";
 import {CreatureTable} from "../components/tables/CreatureTable";
-import {useCreatures} from "../hooks/creatures";
+import {useCreaturesPage} from "../hooks/creaturesPage";
 import {useParams} from "react-router-dom";
 import {DndCharacterTable} from "../components/tables/DndCharacterTable";
 import {Creature} from "../components/tables/Creature";
@@ -32,7 +32,7 @@ export function CampaignFullPage() {
         campaignId: campaignId
     })
 
-    const {creatures, creaturesError, creaturesLoading} = useCreatures({
+    const {creatures, creaturesError, creaturesLoading} = useCreaturesPage({
         page: page,
         size: size,
         campaignId: campaignId,

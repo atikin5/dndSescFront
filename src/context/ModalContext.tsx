@@ -1,12 +1,12 @@
 import React, {createContext, useState} from "react";
-import {Editable} from "../enums/Editable";
+import {ModalTypeEnum} from "../enums/ModalTypeEnum";
 
 interface IModalContext {
     modal: boolean
-    modalType: Editable
+    modalType: ModalTypeEnum
     campaignId: number
     editedId: number
-    openModal: (modalType: Editable, editedId: number, campaignId: number) => void
+    openModal: (modalType: ModalTypeEnum, editedId: number, campaignId: number) => void
     closeModal: () => void
 }
 
@@ -15,18 +15,18 @@ export const ModalContext = createContext<IModalContext>({
     modalType: undefined,
     campaignId: null,
     editedId: null,
-    openModal: (modalType: Editable, editedId: number, campaignId: number) => {},
+    openModal: (modalType: ModalTypeEnum, editedId: number, campaignId: number) => {},
     closeModal: () => {}
 
 })
 
 export const ModalState = ({ children }: {children: React.ReactNode}) => {
     const [modal, setModal] = useState<boolean>(false)
-    const [modalType, setModalType] = useState<Editable>(undefined)
+    const [modalType, setModalType] = useState<ModalTypeEnum>(undefined)
     const [editedId, setEditedId] = useState<number>(null)
     const [campaignId, setCampaignId] = useState<number>(null)
 
-    const openModal = (modalType: Editable, editedId: number, campaignId: number) => {
+    const openModal = (modalType: ModalTypeEnum, editedId: number, campaignId: number) => {
         setModal(true)
         setModalType(modalType)
         setEditedId(editedId)

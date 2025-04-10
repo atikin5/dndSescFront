@@ -13,6 +13,7 @@ export function useLocation({locationId}: IProps) {
     const [error, setError] = useState('')
 
     async function fetchLocations() {
+        console.log(`Fetching locations... http://localhost:8080/location/${locationId}/full`)
         try {
             setError('')
             setLoading(true)
@@ -20,8 +21,9 @@ export function useLocation({locationId}: IProps) {
                 method: "get",
                 baseURL: `http://localhost:8080/location/${locationId}/full`
             })
-            setLocation(response.data.content)
+            setLocation(response.data)
             setLoading(false)
+            console.log(response.data)
         } catch (e: unknown) {
             const error = e as AxiosError
             setLoading(false)

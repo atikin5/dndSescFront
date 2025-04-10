@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
 import {ModalContext} from "../../context/ModalContext";
 import {ICharacter} from "../../interfaces/ICharacter";
-import {Editable} from "../../enums/Editable";
+import {ModalTypeEnum} from "../../enums/ModalTypeEnum";
 
 interface CharacterProps {
     location: boolean
@@ -21,12 +21,12 @@ export function DndCharacter({character, location, campaignId}: CharacterProps) 
             {
                 location &&
                 <td>
-                    {character.locationId != undefined &&
+                    {character.locationId !== undefined &&
                         <Link to={`/campaign/${campaignId}location/${character.locationId}`}>{character.locationName}</Link>}
                 </td>
             }
             <td>
-                <button onClick={() => openModal(Editable.DND_CHARACTER, character.id, campaignId)}>Редактировать</button>
+                <button onClick={() => openModal(ModalTypeEnum.DND_CHARACTER, character.id, campaignId)}>Редактировать</button>
             </td>
         </tr>)
 }
