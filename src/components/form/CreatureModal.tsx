@@ -42,12 +42,6 @@ export function CreatureModal({campaignId, creatureId}: CreatureModalProps) {
             method: "GET",
             baseURL: `http://localhost:8080/item/campaign/unused/${campaignId}`,
         })
-        // @ts-ignore
-        for (const item: IItem of response.data) {
-            if (item.itemPosition === null) {
-                item.itemPosition = {bodyPosition: 0};
-            }
-        }
         return response.data;
     }
 

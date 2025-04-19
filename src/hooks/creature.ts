@@ -7,7 +7,7 @@ interface useCreatureProps {
 }
 
 export function useCreature({creatureId}: useCreatureProps) {
-    const [creature, setCreature] = useState<ICreature[]>([])
+    const [creature, setCreature] = useState<ICreature>()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
@@ -19,7 +19,7 @@ export function useCreature({creatureId}: useCreatureProps) {
                 method: "get",
                 baseURL: `http://localhost:8080/creature/${creatureId}`,
             })
-            setCreature([response.data])
+            setCreature(response.data)
             console.log(response.data)
             setLoading(false)
         } catch (e: unknown) {

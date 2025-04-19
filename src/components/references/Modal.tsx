@@ -13,7 +13,7 @@ export function Modal({modalTitle}: ModalProps) {
     console.log(campaignId);
     console.log(editedId);
     return (
-        <div className="z-10 relative">
+        <div>
             <div >
                 {modalType === "CREATURE" && <CreatureModal creatureId={editedId} campaignId={campaignId} />}
                 {modalType === "DND_CHARACTER" && <EditDndCharacter editedId={editedId}/>}

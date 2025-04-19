@@ -33,7 +33,7 @@ export function LocationFullPage() {
         locationId: locationId
     })
 
-    const {modal, modalType} = useContext(ModalContext)
+    const {modal} = useContext(ModalContext)
 
     return (
         <div className="select-none z-0">
