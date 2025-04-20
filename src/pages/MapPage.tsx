@@ -56,6 +56,7 @@ export function MapPage() {
         }
     };
 
+
     const [validCoordinates, setValidCoordinates] = useState<{ x: number; y: number }[]>([]);
     const handleDragEnd = () => {
         async function fetchCreaturePath() {
@@ -72,6 +73,7 @@ export function MapPage() {
     if (validCoordinates.length !== 0) {
         console.log(validCoordinates);
     }
+    const GRID_SIZE = 80
     return (
         <div className="relative">
             <DndContext
@@ -86,10 +88,11 @@ export function MapPage() {
                     endMove()
                 }}
             >
-                <Tiles tiles={tiles.map((tile: ITile) => <Tile key={tile.id} tile={tile}/>)}/>
+                <Tiles tiles={tiles.map((tile: ITile) => <Tile GRID_SIZE={GRID_SIZE} key={tile.id} tile={tile}/>)}/>
                 <Creatures creatures={creatures.map((creature: ICreature) =>
                     <Creature
                         key={creature.id}
+                        GRID_SIZE={GRID_SIZE}
                         position={(creature.id === movableId && movableType === MovableType.CREATURE) ? lastGridPosition : null}
                         path={validCoordinates}
                         creature={creature}/>)}/>

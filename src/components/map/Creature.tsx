@@ -10,10 +10,11 @@ interface CreatureProps {
     creature: ICreature;
     path: { x: number; y: number }[];
     position: { x: number; y: number };
+    GRID_SIZE: number;
+
 }
 
-export function Creature({creature, position, path}: CreatureProps) {
-    const GRID_SIZE = 40;
+export function Creature({creature, position, path, GRID_SIZE}: CreatureProps) {
     const {openModal} = useContext(ModalContext)
     const {movableId, movableType} = useContext(MoveContext)
     let moving: boolean = movableId === creature.id && movableType === MovableType.CREATURE

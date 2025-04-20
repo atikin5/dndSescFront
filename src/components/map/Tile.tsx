@@ -1,21 +1,40 @@
 import React from "react";
 import {ITile} from "../../interfaces/ITile";
+// @ts-ignore
+import stone1 from "../../icons/tiles/stone1.jpg"
+// @ts-ignore
+import sand2 from "../../icons/tiles/sand2.jpg"
+// @ts-ignore
+import sand1 from "../../icons/tiles/sand1.jpg"
+
 
 interface TileProps {
     key: number;
     tile: ITile;
+    GRID_SIZE: number;
 }
 
-export function Tile({tile}: TileProps) {
+export function Tile({tile, GRID_SIZE}: TileProps) {
+    let img;
+    if (tile.type === "stone1") {
+        img = stone1;
+    } else if (tile.type === "sand1") {
+        img = sand1;
+    } else if (tile.type === "sand2") {
+        img = sand2;
+    }
 
     return (
         <>
             <div style={{
-                left: (tile.position.x * 40),
-                top: (tile.position.y * 40)
+                height: GRID_SIZE,
+                width: GRID_SIZE,
+                left: (tile.position.x * GRID_SIZE),
+                top: (tile.position.y * GRID_SIZE),
+                backgroundImage: `url(${img})`
             }
             }
-                 className="absolute bg-red-600 h-10 w-10 z-0">
+                 className="absolute  z-0">
             </div>
         </>
     )

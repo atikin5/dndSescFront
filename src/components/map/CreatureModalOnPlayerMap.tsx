@@ -1,20 +1,22 @@
-import React, {useContext} from "react";
 import {useCreature} from "../../hooks/creature";
-import {MoveContext} from "../../context/MoveContext";
-import {MovableType} from "../../enums/MovableType";
+import React, {useContext} from "react";
 import {ModalContext} from "../../context/ModalContext";
+import {ModalTypeEnum} from "../../enums/ModalTypeEnum";
 
-interface CreatureModalOnMapProps {
+interface CreatureModalOnMapPlayerProps {
     creatureId: number;
     GRID_SIZE: number;
 }
 
-export function CreatureModalOnMap({creatureId, GRID_SIZE}: CreatureModalOnMapProps) {
+export function CreatureModalOnPlayerMap({creatureId, GRID_SIZE}: CreatureModalOnMapPlayerProps) {
     const {creature} = useCreature({creatureId})
-    const {startMove} = useContext(MoveContext)
-    const {closeModal} = useContext(ModalContext)
+    const {closeModal, openModal} = useContext(ModalContext)
     if (creature !== undefined && creature.position === null) {
         creature.position = {x: 0, y: 0};
+    }
+    let campaignId = 1;
+    if (creature !== undefined) {
+        campaignId = creature.campaignId
     }
     return (
         <>
@@ -24,14 +26,11 @@ export function CreatureModalOnMap({creatureId, GRID_SIZE}: CreatureModalOnMapPr
                     top: ((creature.position.y + 1) * GRID_SIZE),
                     borderRadius: 5
                 }}
-                className="absolute bg-yellow-300 h-40 w-32 z-20 opacity-85 "
+                className="absolute bg-yellow-300 h-40 w-32 z-20 opacity-85"
             >
                 <button onClick={()=>{
-                    startMove(MovableType.CREATURE, creatureId)
-                    closeModal()}
-                }>Передвижение</button>
-                <button onClick={()=>{
                     closeModal()
+                    openModal(ModalTypeEnum.CREATURE_PLAYER, creatureId, campaignId)
                 }}>Характеристики</button>
             </div>}
         </>

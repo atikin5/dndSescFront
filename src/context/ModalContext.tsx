@@ -31,12 +31,14 @@ export const ModalState = ({ children }: {children: React.ReactNode}) => {
         setModalType(modalType)
         setEditedId(editedId)
         setCampaignId(campaignId)
+        console.log("Modal openModal called")
     }
     const closeModal = () => {
         setModal(false)
         setModalType(undefined)
         setEditedId(null)
         setCampaignId(null)
+        console.log("Modal closeModal called")
     }
 
     return (

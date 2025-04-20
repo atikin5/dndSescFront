@@ -2,15 +2,16 @@ import {ICreature} from "../../interfaces/ICreature";
 import React, {useContext, useEffect, useState} from "react";
 import {ModalContext} from "../../context/ModalContext";
 import {ModalTypeEnum} from "../../enums/ModalTypeEnum";
+// @ts-ignore
 import Image from "../../icons/creatures/goblin.png"
 
 interface PlayerCreatureProps {
     creature: ICreature;
     path: { x: number; y: number }[];
+    GRID_SIZE: number;
 }
 
-export function PlayerCreature({creature, path}: PlayerCreatureProps) {
-    const GRID_SIZE = 60;
+export function PlayerCreature({creature, path, GRID_SIZE}: PlayerCreatureProps) {
     const {openModal} = useContext(ModalContext)
     const [position, setPosition] = useState<{x: number, y: number}>(creature.position)
     useEffect(() => {
@@ -27,7 +28,7 @@ export function PlayerCreature({creature, path}: PlayerCreatureProps) {
 
     return (
         <div
-            onClick={() => openModal(ModalTypeEnum.CREATURE_ON_MAP, creature.id, creature.campaignId)}
+            onClick={() => openModal(ModalTypeEnum.CREATURE_ON_PLAYER_MAP, creature.id, creature.campaignId)}
             style={{
                 width: GRID_SIZE,
                 height: GRID_SIZE,
