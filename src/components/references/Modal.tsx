@@ -10,15 +10,11 @@ interface ModalProps {
 
 export function Modal({modalTitle}: ModalProps) {
     const {modalType, editedId, campaignId} = useContext(ModalContext)
-    console.log(campaignId);
-    console.log(editedId);
     return (
-        <div>
-            <div >
-                {modalType === "CREATURE" && <CreatureModal creatureId={editedId} campaignId={campaignId} />}
-                {modalType === "DND_CHARACTER" && <EditDndCharacter editedId={editedId}/>}
-                {modalType === "CREATURE_ON_MAP" && <CreatureModalOnMap creatureId={editedId}/>}
-            </div>
-        </div>
+        <>
+            {modalType === "CREATURE" && <CreatureModal creatureId={editedId} campaignId={campaignId}/>}
+            {modalType === "DND_CHARACTER" && <EditDndCharacter editedId={editedId}/>}
+            {modalType === "CREATURE_ON_MAP" && <CreatureModalOnMap creatureId={editedId}/>}
+        </>
     )
 }

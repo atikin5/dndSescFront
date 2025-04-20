@@ -144,7 +144,8 @@ const CreatureForm = ({creature, locations, items}: {
     };
 
     return (
-        <div className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto ">
+        <div
+            className="bg-[#0e0e14] text-yellow-400 p-6 rounded-lg shadow-lg max-w-screen-xl mx-auto ">
             <h1 className="text-2xl font-bold mb-4">Edit Creature</h1>
             {errorMessage && (
                 <div className="text-red-500 bg-red-900 p-2 rounded mb-4">

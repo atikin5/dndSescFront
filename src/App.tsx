@@ -6,6 +6,7 @@ import {LocationFullPage} from "./pages/LocationFullPage";
 import {ModalState} from "./context/ModalContext";
 import {MapPage} from "./pages/MapPage";
 import {MoveState} from "./context/MoveContext";
+import {PlayersMapPage} from "./pages/PlayersMapPage";
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                 <Route path="/campaign/:campaignId/location/:locationId" element={<LocationFullPage/>}/>
                 <Route path="/campaign/:campaignId/open-location/:locationId"
                        element={<MoveState><MapPage/></MoveState>}/>
+                <Route path="/player/:campaign/:campaignId/location/:locationId" element={<PlayersMapPage/>}/>
             </Routes>
         </ModalState>)
 }

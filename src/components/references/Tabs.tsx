@@ -18,7 +18,7 @@ function CustomTabPanel(props: TabPanelProps) {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{p: 3}}>{children}</Box>}
+            {value === index && <Box sx={{p: 3, borderColor: "yellow"}}>{children}</Box>}
         </div>)
 }
 
@@ -64,8 +64,8 @@ export function BasicTabs({tabsBody, tabsHead, name}: BasicTabsProps) {
     }
 
     return (
-        <div className="z-0 absolute">
-            <Box sx={{width: '100%'}}>
+        <div className="-z-10 absolute">
+            <Box sx={{width: '100%', borderColor: "yellow"}}>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                     <Tabs value={value} onChange={handleChange} aria-label={name}>
                         {ConstructTabsHeader()}

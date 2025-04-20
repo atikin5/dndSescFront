@@ -48,8 +48,8 @@ export function CampaignFullPage() {
 
 
     return (
-        <div className="select-none relative">
-            <BasicTabs name="campaign" tabsBody={[
+        <div className="select-none">
+            <div><BasicTabs name="campaign" tabsBody={[
                 <>
                     {locationsLoading && <Loader/>}
                     {locationsError && <ErrorMessage error={locationsError}/>}
@@ -97,8 +97,8 @@ export function CampaignFullPage() {
                     }
                 </>
             ]}
-                       tabsHead={["locations", "creatures", "characters"]}
-            />
+                            tabsHead={["локации", "существа", "персонажи"]}
+            /></div>
             {modal && <Modal modalTitle={""}/>}
         </div>
     )

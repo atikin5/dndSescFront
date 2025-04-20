@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
   },
   "include": [
     "./src"
-  ]
+
+  ],
+
 }
