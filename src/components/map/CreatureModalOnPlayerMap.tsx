@@ -26,7 +26,7 @@ export function CreatureModalOnPlayerMap({creatureId, GRID_SIZE}: CreatureModalO
                     top: ((creature.position.y + 1) * GRID_SIZE),
                     borderRadius: 5
                 }}
-                className="absolute bg-yellow-300 h-40 w-32 z-20 opacity-85"
+                className="absolute bg-yellow-300 h-8 w-32 z-20 opacity-85"
             >
                 <button onClick={()=>{
                     closeModal()

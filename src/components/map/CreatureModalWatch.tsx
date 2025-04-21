@@ -23,7 +23,7 @@ export function CreatureModalWatch({creatureId, GRID_SIZE}: CreatureModalOnMapPr
                     top: ((creature.position.y + 1) * GRID_SIZE),
                     borderRadius: 5
                 }}
-                className="absolute bg-yellow-300 h-40 w-40 z-20 opacity-85"
+                className="absolute bg-yellow-300 h-28 w-40 z-20 opacity-85"
             >
                 <div>Название: {creature.type}</div>
                 <div>Очков здоровья: {creature.currentHp}</div>
